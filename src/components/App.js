@@ -75,7 +75,10 @@ const App =() => {
         <span className="bar"></span>
     </div>
     </div>
-    <div className="featured">sdfghsfghxfgh</div>
+    <div className="featured-content">"Legends are born in blood.
+
+This one was no different."</div>
+    <div className="featured">this is the featured front page stuff</div>
 
     
     

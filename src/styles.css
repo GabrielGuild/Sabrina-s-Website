@@ -69,6 +69,16 @@ nav.link:hover{
 @media(max-width:768px){
     .hamburger{
         display: block;
+        position: fixed;
+        top:15px;
+        right:15px;
+    }
+    .hamburger-active{
+        display: block;
+        position: fixed;
+        top:15px;
+        right:15px;
+        cursor: pointer;
     }
     .hamburger-active .bar:nth-child(2){
         opacity: 0;
@@ -80,34 +90,39 @@ nav.link:hover{
         transform: translateY(-8px) rotate(-45deg);
     }
     .nav-menu{
-        position: absolute;
+        position: fixed;
         top: -150%;
-        /* top: 0px; */
-        gap: 0;
+        border-top: solid 2px black;
+        background-color: white;
+        position: fixed;
+        left: 0%;
+        right: 0%;
+        gap: 0px;
         flex-direction: column;
-        width: 100%;
         text-align: center;
-        transition: .2s;
-    }
-    .navlink{
-
+        transition: .7s;
+        padding: 10px;
+        transition: .7s;
     }
     .nav-menuActive{
         border-top: solid 2px black;
         background-color: white;
-        position: absolute;
+        position: fixed;
         left: 0%;
         right: 0%;
-        top: 50px;
+        top: 49px;
+        gap: 0px;
         flex-direction: column;
         text-align: center;
-        transition: .5s;
+        transition: .7s;
         padding: 10px;
     }
     .name{
         opacity: 0%;
     }
-
+    .featured-content{
+        display: none;
+    }
 }
 nav{
     
@@ -160,10 +175,16 @@ nav{
     left: 40px;
     
 }
+.featured-content{
+    right: 70px;
+    top: 100px;
+    position: absolute;
+    color: whitesmoke;
+    width: 200px;
+}
 .featured{
+    font-family: 'Lora' ,serif;
     background-color: white;
-    /* position: relative; */
-    /* top:90%; */
     left: 0%;
     right: 0%;
     height: 100px;
