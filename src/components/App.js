@@ -75,7 +75,7 @@ const App =() => {
         <span className="bar"></span>
     </div>
     </div>
-    <div className="featured">sdfghsfghxfgh</div>
+    <div className="featured">featured Stuff here</div>
 
     
     
