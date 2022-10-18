@@ -9,6 +9,7 @@ const DB_URL =
 
 let client;
 
+console.log( "is the url correct",process.env.DATABASE_URL || `postgres://localhost:5432/${DB_NAME}`)
 // github actions client config
 if (process.env.CI) {
   client = new Client({
