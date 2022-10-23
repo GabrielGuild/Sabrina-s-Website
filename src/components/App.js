@@ -65,7 +65,7 @@ const App =() => {
         </li>
         <li>    
         <NavLink exact to='/upcoming' className='navlink' activeClassName="active">
-            mailing list
+            Login/Register
         </NavLink>
         </li>
     </ul>

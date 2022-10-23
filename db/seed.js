@@ -22,10 +22,11 @@
     fullname VARCHAR(255),
     email VARCHAR(255) UNIQUE NOT NULL,
     "isAdmin" BOOLEAN DEFAULT false
+    );
     `)
     console.log("Finished building tables!");
   } catch (error) {
-    console.error("Error building tables!");
+    console.error("Error building tables! Buildtables");
     throw error;
     }
 }
@@ -33,13 +34,14 @@
     async function createInitialData() {
     try{
         const startingUsers = [
-            {username:"Gabriel", password: "Redweaver1", fullname: "Gabriel Guild", email: "gabecg@gmail.com"},
+            {username:"Gabriel", password: "Redweaver1", fullname: "Gabriel Guild", email: "gabecg@gmail.com", isAdmin: true},
+            {username:"Sabrina", password: "Gruffalo0705#", fullname: "Sabrina Guild", email: "sguild20@gmail.com", isAdmin: true},
         ]
         
         const users = await Promise.all(startingUsers.map(createUser))
         console.log("USERS", users)
     } catch (error) {
-        console.error("Error creating tables!")
+        console.error("Error creating tables! create Data")
         throw error
     }
     }
