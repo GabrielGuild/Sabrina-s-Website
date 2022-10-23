@@ -4,7 +4,6 @@ import { loginUser, registerUser } from '../utilities/apiCalls';
 import { setTokenInLocalStorage } from '../utilities/utils';
 
 const login =() => {
-
 return(
  <div className='login'>
       <h2 className='account'>Account</h2>
