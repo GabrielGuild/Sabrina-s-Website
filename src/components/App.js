@@ -1,6 +1,15 @@
 import React,{useState} from "react";
-import {NavLink, Route} from "react-router-dom";
-import Home from "./Home";
+import {
+    NavLink,
+     Route,
+     Routes,
+     BrowserRouter
+    } from "react-router-dom";
+import {
+    Home,
+    Login,
+    Bio
+} from "./index";
 import twitter from '../icons/black twitter logo.png';
 import instagram from '../icons/black insta logo.png'
 import facebook from '../icons/black facebook icon.png'
@@ -8,6 +17,9 @@ import ticktock from '../icons/black tic toc icon.png'
 import background from '../icons/background.jpg'
 
 const App =() => {
+    const [user, setUser] = useState(false);
+    const [token, setToken] = useState('');
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
     const [isActive, setActive] = useState('nav-menu');
     const [hamburger, setHamburger] = useState('hamburger');
 
@@ -28,8 +40,8 @@ const App =() => {
         }
       };
 
-    return<>
-
+    return (
+        <main>
         <img className="background" src={background}  />
         <a href="#" className="name">Sabrina Guild</a>
         
@@ -65,8 +77,15 @@ const App =() => {
         </li>
         <li>    
         <NavLink exact to='/login' className='navlink' activeClassName="active">
-            Login/Register
+        { (user && token) ? 'Account' : 'Login/Register' }
         </NavLink>
+        {
+          (user && token && user.isAdmin) ?
+          <NavLink to="/admin" className="navlink" activeClassName="active">
+            Admin
+          </NavLink> :
+          null
+        }
         </li>
     </ul>
     <div className={hamburger} onClick={toggleHamburger}>
@@ -75,11 +94,14 @@ const App =() => {
         <span className="bar"></span>
     </div>
     </div>
-    <div className="featured">featured Stuff here</div>
+    <Routes>
+        <Route path="/home" element={<Home />} />
+        <Route path="/bio" element={<Bio />} />
+        <Route path="/login" element={<Login />} />
+    </Routes>
+      
 
-    
-    
-    </>
-    
-    }
+      </main>
+    );
+    };
     export default App;
