@@ -1,4 +1,5 @@
-import React,{useState} from "react";
+import React from "react";
+import {useState} from "react";
 import {
     NavLink,
      Route,
@@ -22,9 +23,12 @@ const App =() => {
     const [isLoggingOut, setIsLoggingOut] = useState(false);
     const [isActive, setActive] = useState('nav-menu');
     const [hamburger, setHamburger] = useState('hamburger');
+    const [menuOpen, setMenuOpen] = useState(false);
 
 
       const toggleHamburger = () => {
+        
+
         if(hamburger === 'hamburger' ){
         setHamburger('hamburger-active');
    
@@ -35,13 +39,23 @@ const App =() => {
         
         if(isActive === 'nav-menu'){
             setActive('nav-menuActive');
+
         }else{
             setActive('nav-menu');
+
         }
       };
+      const closeHamburger= () =>{
+        if(hamburger === 'hamburger'){
+            return null
+        }
+        setHamburger('hamburger');
+        setActive('nav-menu');
 
-    return (
-        <main>
+      }
+
+    return(
+        <main  onClick={closeHamburger}>
         <img className="background" src={background}  />
         <a href="#" className="name">Sabrina Guild</a>
         
@@ -95,11 +109,16 @@ const App =() => {
     </div>
     </div>
     <Routes>
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/bio" element={<Bio />} />
         <Route path="/login" element={<Login />} />
     </Routes>
       
+
+      <div className="Footer">
+        <div>© 2022 Sabrina Guild. All rights reserved.</div>
+        <div>Built by Gabriel Guild</div>  
+      </div>
 
       </main>
     );
