@@ -1,22 +1,19 @@
 const express = require('express');
 const usersRouter = express.Router();
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = process.env;
 const { requireLogin, requireAdmin } = require('./utils');
 const {
   createUser,
   getUser,
-  // getUserById,
-  getReviewsByUserId,
   getUserByUsername,
   getAllUsers,
-  getCartByUserId, 
   emailInUseCheck
 } = require('../db');
 
 //api calls below
-usersRouter.get('/', requireAdmin, async (req, res, next) => {
+usersRouter.get('/', async (req, res, next) => {
   try {
     const allUsers = await getAllUsers();
 
@@ -112,32 +109,6 @@ usersRouter.post('/register', async (req, res, next) => {
         user,
       })
     }
-  } catch ({ name, message }) {
-    next({ name, message })
-  }
-});
-
-// get my reviews
-usersRouter.get('/:userId/reviews', async (req, res, next) => {
-  const { userId } = req.params;
-
-  try {
-    const userReviews = await getReviewsByUserId(userId);
-
-    res.send(userReviews);
-  } catch ({ name, message }) {
-    next({ name, message })
-  }
-});
-
-// get my cart
-usersRouter.get('/:userId/cart', async (req, res, next) => {
-  const { userId } = req.params;
-
-  try {
-    const cart = await getCartByUserId({userId});
-
-    res.send(cart);
   } catch ({ name, message }) {
     next({ name, message })
   }

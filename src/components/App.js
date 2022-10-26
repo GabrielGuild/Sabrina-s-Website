@@ -53,6 +53,12 @@ const App =() => {
         setActive('nav-menu');
 
       }
+      const handleLogout =() =>{
+      setUser(false);
+      setToken('');
+      setIsLoggingOut(false);
+      }
+  
 
     return(
         <main  onClick={closeHamburger}>
@@ -79,17 +85,12 @@ const App =() => {
         
         </div>      
     <ul className={isActive}>    
-        <li>    
         <NavLink exact to='/' className='navlink' activeClassName="active">
             Home
         </NavLink>
-        </li>
-         <li>    
         <NavLink exact to='/bio' className='navlink' activeClassName="active">
             Bio
         </NavLink>
-        </li>
-        <li>    
         <NavLink exact to='/login' className='navlink' activeClassName="active">
         { (user && token) ? 'Account' : 'Login/Register' }
         </NavLink>
@@ -100,7 +101,17 @@ const App =() => {
           </NavLink> :
           null
         }
-        </li>
+         {
+          (token && user) ?
+          <button
+            className='Logout'
+            onClick={(event)=>{
+              event.preventDefault();
+              handleLogout();
+            }}>Logout</button> 
+          :
+          null
+        }
     </ul>
     <div className={hamburger} onClick={toggleHamburger}>
         <span className="bar"></span>
@@ -111,7 +122,7 @@ const App =() => {
     <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/bio" element={<Bio />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login token={token} setToken={setToken} user={user} setUser={setUser}/>} />
     </Routes>
       
 
