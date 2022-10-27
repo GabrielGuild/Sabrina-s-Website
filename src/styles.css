@@ -30,7 +30,7 @@ main{
     justify-content: space-between;
     width: 100%;
     padding-top: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 15px;
     align-items: right;
     text-align: end;
     padding: 20px;
@@ -43,7 +43,9 @@ main{
     display:flex;
     justify-content: space-between;
     align-items: right;
-    gap: 40px;
+    gap: 30px;
+    margin-right: 1rem;
+    width:550px ;
     font-family: 'Merriweather', serif;
 
 }
@@ -51,12 +53,23 @@ li{
     list-style: none;
 }
 .navlink{
+    display: flex;
     transition: 0.7s ease;
     margin-right: 2rem;
     color: rgb(27, 25, 25);
     font-family: 'Merriweather';
     font-size: 14pt;
     text-decoration-line: none;
+    width: 100px;
+}
+.navlink.active{
+    transition: 0.7s ease;
+    margin-right: 2rem;
+    color: rgb(27, 25, 25);
+    font-family: 'Merriweather';
+    font-size: 14pt;
+    text-decoration: none;
+    display:flex;
 }
 nav.link:hover{
     color:black;
@@ -78,6 +91,8 @@ nav.link:hover{
 @media(max-width:900px){
     .background{
         opacity: 0%;
+        position: absolute;
+        top: -5000;
     }
     .Video-feature{
         z-index: -10;
@@ -98,7 +113,7 @@ nav.link:hover{
     }
     .nav-menu{
         position: absolute;
-        top: -150%;
+        top: -250%;
         /* top: 0px; */
         gap: 0;
         flex-direction: column;
@@ -107,7 +122,10 @@ nav.link:hover{
 
     }
     .navlink{
-
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
     }
     .nav-menuActive{
         border-top: solid 2px black;
@@ -122,6 +140,9 @@ nav.link:hover{
         padding: 10px;
         z-index: 99;
         border-bottom: solid 2px black;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
     }
     .name{
         display: flex;
@@ -130,11 +151,10 @@ nav.link:hover{
         text-decoration-line: none;
         font-size: 2rem;
         font-family: 'Lora';
-        position: absolute;
+        position: relative;
         max-height: 300px;
         max-width: 300px;
-        left: 25%;
-
+        margin-left: 22%;
         top: 100px;
     }
     .Video-feature{
@@ -188,8 +208,12 @@ nav.link:hover{
         justify-content: space-between;
     }
     .bio-page{
-
-        top: 4rem;
+        margin-left: 15%;
+        margin-right: 10%;
+        margin-bottom: 10rem;
+        right:10%;
+        left:10%;
+        margin-top: 10rem;
         padding: 2rem;
         text-align: center;
         flex-direction: row;
@@ -204,12 +228,87 @@ nav.link:hover{
         font-size: 10pt;
         font-family: 'Lora';
         margin-left: 15%;
-        margin-bottom: 5%;
     }
     .profile-picture{
         position: absolute;
         top: -4000%;
     }
+    .account-container{
+        font-size: 10pt;
+        padding: 2rem;
+        margin-left: 15%;
+        margin-right: 10%;
+        position: relative;
+        text-align: center;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        z-index: 10;
+        background-color: white;
+        margin-top: 10rem;
+        font-size: 18pt;
+        font-family: 'Lora';
+        border-radius: 30px;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 7px 0px;
+        gap:10px;
+        min-width: 200px;
+        max-height: 400px;
+        max-width: 400px;
+        margin-bottom: 15rem;
+    }
+    .login-register-button {
+        font-weight: 30pt;
+        font-family: 'Bebas Neue', Arial, Helvetica, sans-serif;
+        background-color: rgb(255, 255, 255);
+        overflow: hidden;
+        border: 1px solid rgb(175, 175, 175);
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 7px 0px;
+        margin: .9rem .5em;
+        border-radius: 30px;
+        color: rgb(10, 10, 9);
+        padding: .75em 1.5em;
+        word-wrap: none;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .login-register-button:hover {
+        background-color: rgb(174, 174, 174);
+      }
+      .login-register-button:focus {
+        outline: none;
+      }
+      .login-register-button:active {
+        box-shadow: inset .5px .5px 2px 0px black;
+      }
+      input{
+        text-align: center;
+        padding: 4px;
+        margin-top: 1.5rem;
+      }
+      .cart-form{
+        text-align: left;
+        
+      }
+      .Logout{
+        font-size: 18pt;
+        background-color: white;
+        border:none;
+        transition: 0.7s ease;
+        margin-right: 2rem;
+        color: rgb(27, 25, 25);
+        font-family: 'Merriweather';
+        font-size: 14pt;
+        text-decoration-line: none;
+        width: auto;
+    
+      }
+      .Logout:hover{
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .Logout:focus{
+        font-weight: none;
+      }
 }
 nav{
     
@@ -338,6 +437,79 @@ nav{
     width:40%;
     height: 100%;
 }
+.account-container{
+    position: absolute;
+    top: 10rem;
+    padding: 2rem;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    z-index: 10;
+    background-color: white;
+    left: 30%;
+    right: 45%;
+    width: 40%;
+    font-size: 18pt;
+    font-family: 'Lora';
+    border-radius: 30px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 7px 0px;
+    gap:10px;
+}
+.login-register-button {
+    font-weight: 30pt;
+    font-family: 'Bebas Neue', Arial, Helvetica, sans-serif;
+    background-color: rgb(255, 255, 255);
+    overflow: hidden;
+    border: 1px solid rgb(175, 175, 175);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 7px 0px;
+    margin: .9rem .5em;
+    border-radius: 30px;
+    color: rgb(10, 10, 9);
+    padding: .75em 1.5em;
+    word-wrap: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .login-register-button:hover {
+    background-color: rgb(174, 174, 174);
+  }
+  .login-register-button:focus {
+    outline: none;
+  }
+  .login-register-button:active {
+    box-shadow: inset .5px .5px 2px 0px black;
+  }
+  input{
+    text-align: center;
+    padding: 4px;
+    margin-top: 1.5rem;
+  }
+  .cart-form{
+    text-align: left;
+    
+  }
+  .Logout{
+    font-size: 18pt;
+    background-color: white;
+    border:none;
+    display: flex;
+    transition: 0.7s ease;
+    margin-right: 2rem;
+    color: rgb(27, 25, 25);
+    font-family: 'Merriweather';
+    font-size: 14pt;
+    text-decoration-line: none;
+    width: 100px;
+
+  }
+  .Logout:hover{
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .Logout:focus{
+    font-weight: none;
+  }
 }
 .featured{
     background-color: white;
