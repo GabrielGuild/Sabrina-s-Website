@@ -4,7 +4,9 @@ const { Client } = require('pg');
 // change the DB_NAME string to whatever your group decides on
 const DB_NAME = 'sabrina';
 
-const DB_URL =process.env.DATABASE_URL || `https://sabrinaguild.herokuapp.com/${DB_Name}`;
+const DB_URL = ({
+  connectionString: process.env.DATABASE_URL || `https://sabrinaguild.herokuapp.com/${DB_Name}`,
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined,});
   // process.env.DATABASE_URL || `postgres://localhost:5432/${DB_NAME}`;
 
 let client;
