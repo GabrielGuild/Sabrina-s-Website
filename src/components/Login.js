@@ -148,7 +148,8 @@ return(
               isRegistered ?
                 setIsRegistered(false) :
                 setIsRegistered(true);
-            }}>{isRegistered ? 'Need to register a new user?' : 'Already have an account?'}</button>
+            }}>{isRegistered ? 'Need to register?' : 'Already have an account?'}</button>
+            <p>Register now receive our newsletter !</p>
           </form>
       }
 </div>
