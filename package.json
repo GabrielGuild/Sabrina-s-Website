@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "engines" :{
-    "node": "16.13.1",
-    "npm":"8.1.2"
-  },
   "scripts": {
     "dev": "cross-env NODE_OPTIONS='--openssl-legacy-provider' next dev",
     "postinstall": "npm run client:build",
@@ -45,6 +41,10 @@
   "devDependencies": {
     "nodemon": "^2.0.4",
     "supertest": "^6.2.1"
+  },
+  "engines": {
+    "node": "16.13.1",
+    "npm":"8.1.2"
   },
   "browserslist": [
     ">0.2%",
