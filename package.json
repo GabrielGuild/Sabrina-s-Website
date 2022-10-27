@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines" :{
+    "npm": "16.13.1"
+  },
   "scripts": {
     "dev": "cross-env NODE_OPTIONS='--openssl-legacy-provider' next dev",
     "postinstall": "npm run client:build",
@@ -13,7 +16,8 @@
     "start:dev": "concurrently \"npm run client:build\" \"npm run client:dev\" \"npm run server:dev\"",
     "start": "node index.js",
     "seed:dev": "nodemon ./db/seed.js",
-    "test": "jest --runInBand"
+    "test": "jest --runInBand",
+    "seed": "node ./db/seed.js"
   },
   "author": "",
   "license": "ISC",
