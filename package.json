@@ -10,7 +10,7 @@
     "client:build": "react-scripts build",
     "server:dev": "nodemon index.js",
     "db:build": "node ./db/seed.js",
-    "start:dev": "concurrently \"npm run dev\" \"npm run client:build\" \"npm run client:dev\" \"npm run server:dev\"",
+    "start:dev": "concurrently \"npm run client:build\" \"npm run client:dev\" \"npm run server:dev\"",
     "start": "node index.js",
     "seed:dev": "nodemon ./db/seed.js",
     "test": "jest --runInBand"

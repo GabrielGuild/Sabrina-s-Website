@@ -11,7 +11,7 @@ const Logout = ({ isLoggingOut, setIsLoggingOut, setUser, setToken }) => {
   }
 
   const cancelLogout = (event) => {
-    event.preventDefault(event.target.value);
+    event.preventDefault();
     setIsLoggingOut(false);
   }
 
