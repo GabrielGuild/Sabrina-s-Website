@@ -114,7 +114,7 @@ return(
                     />
                   </div>
                   {
-                    (password && passwordConfirmation && (password != passwordConfirmation)) ?
+                    (password && passwordConfirmation && (password !== passwordConfirmation)) ?
                     <p style={{fontSize: '10pt', color: 'red'}}>Passwords don't match!</p> :
                     null
                   }
