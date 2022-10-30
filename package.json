@@ -13,7 +13,8 @@
     "start:dev": "concurrently \"npm run client:build\" \"npm run client:dev\" \"npm run server:dev\"",
     "start": "node index.js",
     "seed:dev": "nodemon ./db/seed.js",
-    "test": "jest --runInBand"
+    "test": "jest --runInBand",
+    "seed": "node ./db/seed.js"
   },
   "author": "",
   "license": "ISC",
@@ -40,6 +41,10 @@
   "devDependencies": {
     "nodemon": "^2.0.4",
     "supertest": "^6.2.1"
+  },
+  "engines": {
+    "node": "16.13.1",
+    "npm":"8.1.2"
   },
   "browserslist": [
     ">0.2%",

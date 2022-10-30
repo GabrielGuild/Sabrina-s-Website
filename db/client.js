@@ -4,8 +4,10 @@ const { Client } = require('pg');
 // change the DB_NAME string to whatever your group decides on
 const DB_NAME = 'sabrina';
 
-const DB_URL =
-  process.env.DATABASE_URL || `postgres://localhost:5432/${DB_NAME}`;
+const DB_URL = ({
+  connectionString: process.env.DATABASE_URL || `postgresql://GabrielGuild:v2_3vCSk_kHNu5za87YZvvvxW9x2bZKS@db.bit.io/GabrielGuild/${DB_NAME}?sslmode=require`,});
+  // ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: true } : undefined,
+  // process.env.DATABASE_URL || `postgres://localhost:5432/${DB_NAME}`;
 
 let client;
 
