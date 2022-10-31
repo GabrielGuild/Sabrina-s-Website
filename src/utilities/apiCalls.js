@@ -1,9 +1,9 @@
-// const apiUrl = 'localhost:4000/api'
+const apiUrl =  `${process.env.DATABASE_URL}`
 
 export const apiCall = async (url, method = 'GET', token, body) => {
     let data = false;
     try {
-      const response = await fetch('http://localhost:4000/api' + url, setToken(getFetchOptions(method, body), token));
+      const response = await fetch(apiUrl + url, setToken(getFetchOptions(method, body), token));
       data = await response.json();
   
       if (data.error) {
