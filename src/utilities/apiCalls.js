@@ -1,4 +1,5 @@
 const apiUrl =  `${process.env.DATABASE_URL}`
+console.log("is this the right url ",process.env.DATABASE_URL)
 
 export const apiCall = async (url, method = 'GET', token, body) => {
     let data = false;
