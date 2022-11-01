@@ -45,28 +45,28 @@ const Admin = ({ user, token }) => {
 
   if (!user || !user.isAdmin) {
     return (
-      <div className=".account-container">
+      <div className="account-container">
         <h2 className="page-titles">You are not logged in as an Admin.</h2>
       </div>
     )
   } else return (
-    <div className=".account-container">
+    <div className="account-container">
 
-      <h2 className="page-titles"> Review Users </h2>
+      <h2 className="page-titles"> Email List </h2>
       <div id="all-users-container">
         {
           (allUsersData && allUsersData.length > 0) ?
             allUsersData.map((userData => {
               return (
                 <div key={userData.id} className='email'>
-                  <p>Email: {userData.email}</p>
-                  {
+                  <p> {userData.email},</p>
+                  {/* {
                     (userData.id !== user.id) ?
                       <button onClick={(event) => {
                         handleAdminStatusEdit(event, userData)
                       }}>{userData.isAdmin ? 'Remove Admin' : 'Make Admin'}</button> :
                       null
-                  }
+                  } */}
                 </div>
               )
             })) :
