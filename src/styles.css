@@ -151,11 +151,11 @@ nav.link:hover{
         text-decoration-line: none;
         font-size: 2rem;
         font-family: 'Lora';
-        position: relative;
+        position: absolute;
         max-height: 300px;
         max-width: 300px;
         margin-left: 22%;
-        top: 100px;
+        top: -1000000px;
     }
     .Video-feature{
         height: 100%;
