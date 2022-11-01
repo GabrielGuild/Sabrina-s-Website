@@ -9,7 +9,8 @@ import {
 import {
     Home,
     Login,
-    Bio
+    Bio,
+    Admin
 } from "./index";
 import twitter from '../icons/black twitter logo.png';
 import instagram from '../icons/black insta logo.png'
@@ -123,6 +124,7 @@ const App =() => {
         <Route path="/" element={<Home />} />
         <Route path="/bio" element={<Bio />} />
         <Route path="/login" element={<Login token={token} setToken={setToken} user={user} setUser={setUser}/>} />
+        <Route path="/admin" element={<Admin token={token} user={user}/>}/>
     </Routes>
       
 
