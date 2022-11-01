@@ -1,4 +1,4 @@
-const apiUrl = `https://sabrina.onrender.com/api`
+const apiUrl = `https://sabrinaguild.onrender.com/api`
 // const apiUrl = `https://localhost:4000/api`
 
 export const apiCall = async (url, method = 'GET', token, body) => {
