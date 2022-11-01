@@ -45,12 +45,12 @@ const Admin = ({ user, token }) => {
 
   if (!user || !user.isAdmin) {
     return (
-      <div className="admin-body">
+      <div className=".account-container">
         <h2 className="page-titles">You are not logged in as an Admin.</h2>
       </div>
     )
   } else return (
-    <div className="admin-body">
+    <div className=".account-container">
 
       <h2 className="page-titles"> Review Users </h2>
       <div id="all-users-container">
@@ -58,12 +58,8 @@ const Admin = ({ user, token }) => {
           (allUsersData && allUsersData.length > 0) ?
             allUsersData.map((userData => {
               return (
-                <div key={userData.id} className='single-user'>
-                  <h2>{userData.username}</h2>
-                  <p>Name: {userData.fullname}</p>
-                  <p>Address: {userData.address}</p>
+                <div key={userData.id} className='email'>
                   <p>Email: {userData.email}</p>
-                  <p>Admin Status: {userData.isAdmin ? 'Yes' : 'No'}</p>
                   {
                     (userData.id !== user.id) ?
                       <button onClick={(event) => {
