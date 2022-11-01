@@ -88,3 +88,7 @@ export const apiCall = async (url, method = 'GET', token, body) => {
       })
       return data || []
   }
+  export const patchAdminStatus = async(token, {userId, isAdmin}) => {
+    const data = await apiCall(`/users/${userId}`, 'PATCH', token, {isAdmin});
+    return data || []
+  }
