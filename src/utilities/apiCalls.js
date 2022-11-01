@@ -1,14 +1,10 @@
-// if(process.env.DATABASE_URL){
-//   const apiUrl =  `${process.env.DATABASE_URL}`
-// }else{
-// }
-const apiUrl = `postgres://sabrina_user:67GAw3wM2cMEO443tGptzKrei1AfNn42@dpg-cdfv8l82i3mud49b4lb0-a/sabrina`
-console.log("is this the right url ",apiUrl)
+const apiUrl = `https://sabrina.onrender.com/api`
+// const apiUrl = `https://localhost:4000/api`
 
 export const apiCall = async (url, method = 'GET', token, body) => {
     let data = false;
     try {
-      const response = await fetch((process.env.DATABASE_URL) ? process.env.DATABASE_URL : apiUrl  + url, setToken(getFetchOptions(method, body), token));
+      const response = await fetch( apiUrl + url, setToken(getFetchOptions(method, body), token));
       data = await response.json();
   
       if (data.error) {
