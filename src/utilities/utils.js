@@ -47,11 +47,12 @@ export const setTokenInLocalStorage = (token) => {
   
   // Filter out the outdated version of an element from an array
   export const filterOutOldVersion = (prevArr, updatedElem) => {
-    return prevArr.filter(elem => {
+    const data = (prevArr.filter(elem => {
       if (elem.id && updatedElem.id) {
         return elem.id !== updatedElem.id;
       } else if (elem.cartInventoryId && updatedElem.cartInventoryId) {
         return elem.cartInventoryId !== updatedElem.cartInventoryId
       }
-    })
+    }))
+    return data
   }

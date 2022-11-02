@@ -92,7 +92,7 @@ nav.link:hover{
     .background{
         opacity: 0%;
         position: absolute;
-        top: -5000;
+        top: -5100;
     }
     .Video-feature{
         z-index: -10;
@@ -163,7 +163,7 @@ nav.link:hover{
         display: flex;
     }
     .video-container{
-
+        margin-top: 50px;
     }
     .inpunity-container{
         display: flex;
@@ -348,6 +348,9 @@ nav{
 
 }
 @media(min-width:900px){
+    .background{
+        margin-top: -50px;
+    }
 .name{
     display: flex;
     justify-content: space-between;
@@ -374,7 +377,7 @@ nav{
     width: 70%;
     right: 20%;
     left: 15%;
-    top: 18%;
+    top: 10%;
     display: flex;
     /* background-color: white; */
     /* padding-right: ; */
