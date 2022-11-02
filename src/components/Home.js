@@ -1,20 +1,8 @@
 import React from "react";
-import {useState} from "react";
 import Video from "./Video.js";
-import video from "../icons/slideshow/TheInheritance.mp4";
-import picture from "../icons/slideshow/slideshow2.jpg";
-
 
 
 const Home =() => {
-    const videoOptions ={
-        autoplay: true,
-        controls: false,
-        scorces: [{
-            src: video,
-            type: 'video/mp4'
-        }]
-    }
     
         return (
             <div>

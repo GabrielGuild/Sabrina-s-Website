@@ -4,7 +4,6 @@ import {
     NavLink,
      Route,
      Routes,
-     BrowserRouter
     } from "react-router-dom";
 import {
     Home,
@@ -24,7 +23,7 @@ const App =() => {
     const [isLoggingOut, setIsLoggingOut] = useState(false);
     const [isActive, setActive] = useState('nav-menu');
     const [hamburger, setHamburger] = useState('hamburger');
-    const [menuOpen, setMenuOpen] = useState(false);
+ 
 
 
       const toggleHamburger = () => {
@@ -63,22 +62,22 @@ const App =() => {
 
     return(
         <main  onClick={closeHamburger}>
-        <img className="background" src={background}  />
+        <img className="background" src={background} alt="" />
         <a href="#" className="name">Sabrina Guild</a>
         
     <div className="navbar"> 
     <ul className="socal-bar">
         <li>
-        <a  href="https://twitter.com/theguildwriter"><img className="socal-links" src={twitter} onClick="https://arizonaatwork.com" /></a>
+        <a  href="https://twitter.com/theguildwriter"><img className="socal-links" src={twitter}  alt="" onClick="https://arizonaatwork.com" /></a>
         </li>
         <li>
-        <a  href="https://www.instagram.com/theguildwriter/"><img className="socal-links" src={instagram} onClick="https://arizonaatwork.com" /></a>
+        <a  href="https://www.instagram.com/theguildwriter/"><img className="socal-links" src={instagram} alt="" onClick="https://arizonaatwork.com" /></a>
         </li>
         <li>
-        <a  href="https://www.facebook.com/people/Sabrina-Guild/100084027047976/"><img className="socal-links" src={facebook} onClick="https://arizonaatwork.com" /></a>
+        <a  href="https://www.facebook.com/people/Sabrina-Guild/100084027047976/"><img className="socal-links" src={facebook} alt="" onClick="https://arizonaatwork.com" /></a>
         </li>
         <li>
-        <a  href="https://www.tiktok.com/@theguildwriter"><img className="socal-links" src={ticktock} onClick="https://arizonaatwork.com" /></a>
+        <a  href="https://www.tiktok.com/@theguildwriter"><img className="socal-links" src={ticktock} alt="" onClick="https://arizonaatwork.com" /></a>
         </li>
     </ul>   
     

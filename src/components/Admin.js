@@ -1,11 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { fetchAllUsers, patchAdminStatus } from "../utilities/apiCalls";
+import { fetchAllUsers} from "../utilities/apiCalls";
 import {
   filterForOtherAdmins,
   filterForCurrentAdmin,
   filterForNonAdmins,
-  filterOutOldVersion,
 } from "../utilities/utils";
 
 const Admin = ({ user, token }) => {
@@ -24,24 +23,24 @@ const Admin = ({ user, token }) => {
     }
   }, [])
 
-  const handleAdminStatusEdit = async (event, userObj) => {
-    event.preventDefault();
-    const isAdmin = !userObj.isAdmin;
-    const userData = await patchAdminStatus(token, { userId: userObj.id, isAdmin });
+  // const handleAdminStatusEdit = async (event, userObj) => {
+  //   event.preventDefault();
+  //   const isAdmin = !userObj.isAdmin;
+  //   const userData = await patchAdminStatus(token, { userId: userObj.id, isAdmin });
 
-    if (userData.message) {
-      alert(`Error: ${userData.messsage}`)
-    } if (userData.id) {
-      setAllUsersData([
-        ...filterForCurrentAdmin(allUsersData, user.id),
-        ...filterForOtherAdmins(filterOutOldVersion(allUsersData, userData), user.id),
-        userData,
-        ...filterForNonAdmins(filterOutOldVersion(allUsersData, userData))
-      ])
-    } else {
-      alert("There was an error updating the user's admin status");
-    }
-  }
+  //   if (userData.message) {
+  //     alert(`Error: ${userData.messsage}`)
+  //   } if (userData.id) {
+  //     setAllUsersData([
+  //       ...filterForCurrentAdmin(allUsersData, user.id),
+  //       ...filterForOtherAdmins(filterOutOldVersion(allUsersData, userData), user.id),
+  //       userData,
+  //       ...filterForNonAdmins(filterOutOldVersion(allUsersData, userData))
+  //     ])
+  //   } else {
+  //     alert("There was an error updating the user's admin status");
+  //   }
+  // }
 
   if (!user || !user.isAdmin) {
     return (
