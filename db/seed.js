@@ -49,4 +49,4 @@
     buildTables()
     .then(createInitialData)
     .catch(console.error)
-    .finally(() => client.end());
+    .finally(() => {client.end(); client.release();});
