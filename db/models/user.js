@@ -1,12 +1,12 @@
-const { pool } = require('../client');
+const { createClient } = require('../client');
 const bcrypt = require('bcrypt');
+const { client } = require('..');
 
 async function createUser({ username, password, fullname, email, isAdmin = false }) {
     try {
-      const client = await pool.connect();
-      client.on('notice', (msg) => console.warn('notice:', msg));
       const SALT_COUNT = 10;
       const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
+      const client = await createClient();
   
       const { rows: [user] } = await client.query(`
         INSERT INTO users(username, password, fullname, email, "isAdmin")
@@ -26,8 +26,7 @@ async function createUser({ username, password, fullname, email, isAdmin = false
 
   async function getUser({ username, password }) {
     try {
-      const client = await pool.connect();
-      client.on('notice', (msg) => console.warn('notice:', msg));
+      const client = await createClient();
       const user = await getUserByUsername(username);
       if (user) {
         const hashedPassword = user.password;
@@ -44,7 +43,7 @@ async function createUser({ username, password, fullname, email, isAdmin = false
         client.release();
         return 'userDoesNotExist'
       }
-      client.release();
+      
     } catch (error) {
       throw error
     }
@@ -52,8 +51,7 @@ async function createUser({ username, password, fullname, email, isAdmin = false
 
   async function getUserById(userId) {
     try {
-      const client = await pool.connect();
-      client.on('notice', (msg) => console.warn('notice:', msg));
+      const client = await createClient();
       const { rows: [user] } = await client.query(`
         SELECT *
         FROM users
@@ -70,8 +68,7 @@ async function createUser({ username, password, fullname, email, isAdmin = false
 
   async function getUserByUsername(username) {
     try {
-      const client = await pool.connect();
-      client.on('notice', (msg) => console.warn('notice:', msg));
+      const client = await createClient();
       const { rows: [user] } = await client.query(`
       SELECT  *
       FROM users
@@ -86,8 +83,7 @@ async function createUser({ username, password, fullname, email, isAdmin = false
 
   async function getAllUsers() {
     try {
-      const client = await pool.connect();
-      client.on('notice', (msg) => console.warn('notice:', msg));
+      const client = await createClient();
       const { rows: users } = await client.query(`
         SELECT*
         FROM users;
@@ -105,8 +101,7 @@ async function createUser({ username, password, fullname, email, isAdmin = false
 
   async function emailInUseCheck(emailInput) {
     try {
-      const client = await pool.connect();
-      client.on('notice', (msg) => console.warn('notice:', msg));
+      const client = await createClient();
       let inUse = false;
       const { rows } = await client.query(`
         SELECT email

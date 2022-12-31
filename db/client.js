@@ -1,4 +1,5 @@
-const { Pool } = require("pg")
+const { Pool } = require("pg");
+
 
 const connectionString = 'postgresql://GabrielGuild:v2_3vEvt_S32Kdegt4KvN89sbfGnrRfe@db.bit.io/GabrielGuild/sabrina?sslmode=require'
 const pool = new Pool({
@@ -13,4 +14,19 @@ const pool = new Pool({
   keepAliveIntervalMillis: 30000,
 })
 
-module.exports = { pool }
+async function createClient() {
+  try {
+    // Acquire a connection from the pool
+    const client = await pool.connect();
+    client.on('notice', msg => console.warn('notice:', msg))
+    return client;
+  } catch (error) {
+    console.error('Error creating client: ', error);
+    throw error;
+  } finally {
+    // Release the connection back to the pool
+    
+  }
+}
+
+module.exports = { createClient }
