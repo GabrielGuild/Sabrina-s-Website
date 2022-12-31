@@ -2,7 +2,7 @@ const {
     createUser,
   } = require('./models/user');
   
-  const { pool } = require('./db');
+  const { pool } = require('./client');
 
 
     async function buildTables() {
