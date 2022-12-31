@@ -11,5 +11,5 @@ ReactDOM.render(
     <App />
     </BrowserRouter>,
     document.getElementById('app')
-        // "start": "react-scripts --openssl-legacy-provider start",
+
 )
