@@ -1,5 +1,4 @@
-// Connect to DB
-const { Pool } = require('pg')
+const { Pool } = require("pg")
 
 const connectionString = 'postgresql://GabrielGuild:v2_3vEvt_S32Kdegt4KvN89sbfGnrRfe@db.bit.io/GabrielGuild/sabrina?sslmode=require'
 const pool = new Pool({
@@ -14,8 +13,4 @@ const pool = new Pool({
   keepAliveIntervalMillis: 30000,
 })
 
-
-
-
-
-module.exports = pool; 
+module.exports = { pool }
