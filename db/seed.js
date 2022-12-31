@@ -1,20 +1,21 @@
-    const {
+const {
     createUser,
-    } = require('./models/user');
+  } = require('./models/user');
+  
+  const { pool } = require('./db');
 
-    const client = require("./client")
 
     async function buildTables() {
         try{
-    client.connect();
+    pool.connect();
 
     console.log('dropping tables')
-    await client.query(`
+    await pool.query(`
     DROP TABLE IF EXISTS users;
     `)
 
     console.log('building tables')
-    await client.query(`
+    await pool.query(`
     CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(255) UNIQUE NOT NULL,
@@ -49,4 +50,4 @@
     buildTables()
     .then(createInitialData)
     .catch(console.error)
-    .finally(() =>  client.end());
+    .finally(() =>  pool.release());
