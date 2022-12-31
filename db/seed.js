@@ -4,33 +4,37 @@ const {
   
   const { pool } = require('./client');
 
-
-    async function buildTables() {
-        try{
-    pool.connect();
-
-    console.log('dropping tables')
-    await pool.query(`
-    DROP TABLE IF EXISTS users;
-    `)
-
-    console.log('building tables')
-    await pool.query(`
-    CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    username VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    fullname VARCHAR(255),
-    email VARCHAR(255) UNIQUE NOT NULL,
-    "isAdmin" BOOLEAN DEFAULT false
-    );
-    `)
-    console.log("Finished building tables!");
-  } catch (error) {
-    console.error("Error building tables! Buildtables");
-    throw error;
+  async function buildTables() {
+    try {
+      // Acquire a connection from the pool
+      const client = await pool.connect();
+      client.on('notice', (msg) => console.warn('notice:', msg));
+  
+      console.log('dropping tables');
+      await client.query(`
+        DROP TABLE IF EXISTS users;
+      `);
+  
+      console.log('building tables');
+      await client.query(`
+        CREATE TABLE users (
+          id SERIAL PRIMARY KEY,
+          username VARCHAR(255) UNIQUE NOT NULL,
+          password VARCHAR(255) NOT NULL,
+          fullname VARCHAR(255),
+          email VARCHAR(255) UNIQUE NOT NULL,
+          "isAdmin" BOOLEAN DEFAULT false
+        );
+      `);
+      console.log('Finished building tables!');
+  
+      // Release the connection back to the pool
+      client.release();
+    } catch (error) {
+      console.error('Error building tables! Buildtables');
+      throw error;
     }
-}
+  }
 
     async function createInitialData() {
     try{
@@ -50,4 +54,4 @@ const {
     buildTables()
     .then(createInitialData)
     .catch(console.error)
-    .finally(() =>  pool.release());
+    

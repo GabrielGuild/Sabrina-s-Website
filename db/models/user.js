@@ -1,8 +1,10 @@
-const client = require('../client');
+const { pool } = require('../client');
 const bcrypt = require('bcrypt');
 
 async function createUser({ username, password, fullname, email, isAdmin = false }) {
     try {
+      const client = await pool.connect();
+      client.on('notice', (msg) => console.warn('notice:', msg));
       const SALT_COUNT = 10;
       const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
   
@@ -15,6 +17,7 @@ async function createUser({ username, password, fullname, email, isAdmin = false
       );
   
       delete user.password
+      client.release();
       return user
     } catch (error) {
       throw error;
@@ -23,19 +26,25 @@ async function createUser({ username, password, fullname, email, isAdmin = false
 
   async function getUser({ username, password }) {
     try {
+      const client = await pool.connect();
+      client.on('notice', (msg) => console.warn('notice:', msg));
       const user = await getUserByUsername(username);
       if (user) {
         const hashedPassword = user.password;
         const isValid = await bcrypt.compare(password, hashedPassword)
         if (isValid) {
           delete user.password
+          client.release();
           return user
         } else {
+          client.release();
           return 'passwordNotValid'
         }
       } else {
+        client.release();
         return 'userDoesNotExist'
       }
+      client.release();
     } catch (error) {
       throw error
     }
@@ -43,6 +52,8 @@ async function createUser({ username, password, fullname, email, isAdmin = false
 
   async function getUserById(userId) {
     try {
+      const client = await pool.connect();
+      client.on('notice', (msg) => console.warn('notice:', msg));
       const { rows: [user] } = await client.query(`
         SELECT *
         FROM users
@@ -50,7 +61,7 @@ async function createUser({ username, password, fullname, email, isAdmin = false
       `, [userId])
   
       delete user.password
-  
+      client.release();
       return user
     } catch (error) {
       throw error
@@ -59,11 +70,14 @@ async function createUser({ username, password, fullname, email, isAdmin = false
 
   async function getUserByUsername(username) {
     try {
+      const client = await pool.connect();
+      client.on('notice', (msg) => console.warn('notice:', msg));
       const { rows: [user] } = await client.query(`
       SELECT  *
       FROM users
       WHERE username = $1
       `, [username])
+      client.release();
       return user
     } catch (error) {
       throw error
@@ -72,6 +86,8 @@ async function createUser({ username, password, fullname, email, isAdmin = false
 
   async function getAllUsers() {
     try {
+      const client = await pool.connect();
+      client.on('notice', (msg) => console.warn('notice:', msg));
       const { rows: users } = await client.query(`
         SELECT*
         FROM users;
@@ -80,7 +96,7 @@ async function createUser({ username, password, fullname, email, isAdmin = false
       users.forEach(user => {
         delete user.password
       })
-  
+      client.release();
       return users;
     } catch (error) {
       throw error;
@@ -89,6 +105,8 @@ async function createUser({ username, password, fullname, email, isAdmin = false
 
   async function emailInUseCheck(emailInput) {
     try {
+      const client = await pool.connect();
+      client.on('notice', (msg) => console.warn('notice:', msg));
       let inUse = false;
       const { rows } = await client.query(`
         SELECT email
@@ -100,7 +118,7 @@ async function createUser({ username, password, fullname, email, isAdmin = false
           inUse = true;
         }
       })
-  
+      client.release();
       return inUse
     } catch (error) {
       throw error
