@@ -2,7 +2,7 @@
 const { Pool } = require('pg')
 
 const connectionString = 'postgresql://GabrielGuild:v2_3vEvt_S32Kdegt4KvN89sbfGnrRfe@db.bit.io/GabrielGuild/sabrina?sslmode=require'
-const pool = new Pool({
+const client = new Pool({
   user: 'GabrielGuild',
     host: 'db.bit.io',
     database: 'GabrielGuild/sabrina',  
@@ -18,4 +18,4 @@ const pool = new Pool({
 
 
 
-module.exports = pool; 
+module.exports = client; 
