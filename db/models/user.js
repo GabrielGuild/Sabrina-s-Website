@@ -1,4 +1,4 @@
-const { createClient } = require('../client');
+const { createClient } = require('../client.js');
 const bcrypt = require('bcrypt');
 
 async function createUser({ username, password, fullname, email, isAdmin = false }) {
