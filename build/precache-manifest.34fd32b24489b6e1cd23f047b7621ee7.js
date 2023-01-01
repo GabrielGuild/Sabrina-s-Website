@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "ee3356e1c392cad8284d",
+    "revision": "3c33817e7e6410bf93fc",
     "url": "/static/css/main.8a310090.chunk.css"
   },
   {
-    "revision": "ee3356e1c392cad8284d",
-    "url": "/static/js/main.ee3356e1.chunk.js"
+    "revision": "3c33817e7e6410bf93fc",
+    "url": "/static/js/main.3c33817e.chunk.js"
   },
   {
     "revision": "8510c8e853e23eb88177",
@@ -28,7 +28,7 @@ self.__precacheManifest = [
     "url": "/static/media/TheInheritance.fbf8fdcf.mp4"
   },
   {
-    "revision": "850b4aed477808a99e0771f1a1ed5363",
+    "revision": "87bf4e263128423d3420d24e7785ab13",
     "url": "/index.html"
   }
 ];

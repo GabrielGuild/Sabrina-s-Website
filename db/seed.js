@@ -40,9 +40,7 @@ const {
   }
 
     async function createInitialData() {
-        let client
     try{
-         client = await createClient();
 
         const startingUsers = [
             {username:"Gabriel", password: "Redweaver1", fullname: "Gabriel Guild", email: "gabecg@gmail.com", isAdmin: true},
@@ -51,7 +49,7 @@ const {
         
         const users = await Promise.all(startingUsers.map(createUser))
         console.log("USERS", users)
-        client.release();
+
     } catch (error) {
         console.error("Error creating tables! create Data")
         throw error

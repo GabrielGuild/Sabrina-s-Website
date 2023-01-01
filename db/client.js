@@ -19,9 +19,15 @@ async function createClient() {
     // Acquire a connection from the pool
     const client = await pool.connect();
     client.on('notice', msg => console.warn('notice:', msg))
+    setTimeout(() => {
+      client.release();
+    }, 20000);
     return client;
   } catch (error) {
     console.error('Error creating client: ', error);
+    setTimeout(() => {
+      client.release();
+    }, 10000);
     throw error;
   } finally {
     // Release the connection back to the pool
