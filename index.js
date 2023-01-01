@@ -42,23 +42,12 @@ server.use((error, req, res, next) => {
 });
 
 // define a server handle to close open tcp connection after unit tests have run
-const connectionString = 'postgresql://GabrielGuild:v2_3vEvt_S32Kdegt4KvN89sbfGnrRfe@db.bit.io/GabrielGuild/sabrina?sslmode=require'
-const pool = new Pool({
-  user: 'GabrielGuild',
-    host: 'db.bit.io',
-    database: 'GabrielGuild/sabrina',  
-    password: 'v2_3vFTT_4vuiJ7YNeP58LnjKacCxKLY', 
-    port: 5432,
-    ssl: true,
-  max: 20,
-  keepAlives: true,
-  keepAliveIntervalMillis: 30000,
-})
+const { createClient } = require('./db/client');
 
 const startServer = async () => {
   try {
     // Acquire a connection from the pool
-    const client = await pool.connect();
+    const client = await createClient();
     client.on('notice', msg => console.warn('notice:', msg))
     console.log('Database is open for business!');
     client.release();

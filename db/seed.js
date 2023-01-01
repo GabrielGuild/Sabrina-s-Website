@@ -31,7 +31,6 @@ const {
       console.log('Finished building tables!');
   
       // Release the connection back to the pool
-      client.release();
     } catch (error) {
       console.error('Error building tables! Buildtables');
       throw error;
