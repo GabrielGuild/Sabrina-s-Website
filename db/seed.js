@@ -2,7 +2,7 @@ const {
   createUser,
   } = require('./models/user');
 
-  const client = require("./client")();
+  const client = require("./client");
 
   async function buildTables() {
       try{
@@ -25,6 +25,7 @@ const {
   );
   `)
   console.log("Finished building tables!");
+  client.release();
 } catch (error) {
   console.error("Error building tables! Buildtables");
   throw error;
@@ -33,6 +34,7 @@ const {
 
   async function createInitialData() {
   try{
+    client.connect();
       const startingUsers = [
           {username:"Gabriel", password: "Redweaver1", fullname: "Gabriel Guild", email: "gabecg@gmail.com", isAdmin: true},
           {username:"Sabrina", password: "Gruffalo0705#", fullname: "Sabrina Guild", email: "sguild20@gmail.com", isAdmin: true},
@@ -40,6 +42,7 @@ const {
       
       const users = await Promise.all(startingUsers.map(createUser))
       console.log("USERS", users)
+      client.release();
   } catch (error) {
       console.error("Error creating tables! create Data")
       throw error
@@ -49,4 +52,3 @@ const {
   buildTables()
   .then(createInitialData)
   .catch(console.error)
-  .finally(() => client.release())
