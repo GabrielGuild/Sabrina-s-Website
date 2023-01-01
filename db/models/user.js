@@ -1,6 +1,5 @@
 const { createClient } = require('../client');
 const bcrypt = require('bcrypt');
-const { client } = require('..');
 
 async function createUser({ username, password, fullname, email, isAdmin = false }) {
     try {
@@ -17,7 +16,7 @@ async function createUser({ username, password, fullname, email, isAdmin = false
       );
   
       delete user.password
-      client.release();
+      
       return user
     } catch (error) {
       throw error;
@@ -33,14 +32,14 @@ async function createUser({ username, password, fullname, email, isAdmin = false
         const isValid = await bcrypt.compare(password, hashedPassword)
         if (isValid) {
           delete user.password
-          client.release();
+          
           return user
         } else {
-          client.release();
+          
           return 'passwordNotValid'
         }
       } else {
-        client.release();
+        
         return 'userDoesNotExist'
       }
       
@@ -59,7 +58,7 @@ async function createUser({ username, password, fullname, email, isAdmin = false
       `, [userId])
   
       delete user.password
-      client.release();
+      
       return user
     } catch (error) {
       throw error
@@ -74,7 +73,7 @@ async function createUser({ username, password, fullname, email, isAdmin = false
       FROM users
       WHERE username = $1
       `, [username])
-      client.release();
+      
       return user
     } catch (error) {
       throw error
@@ -92,7 +91,7 @@ async function createUser({ username, password, fullname, email, isAdmin = false
       users.forEach(user => {
         delete user.password
       })
-      client.release();
+      
       return users;
     } catch (error) {
       throw error;
@@ -113,7 +112,7 @@ async function createUser({ username, password, fullname, email, isAdmin = false
           inUse = true;
         }
       })
-      client.release();
+      
       return inUse
     } catch (error) {
       throw error
