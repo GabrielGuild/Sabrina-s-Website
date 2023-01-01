@@ -27,7 +27,7 @@ async function createClient() {
     console.error('Error creating client: ', error);
     setTimeout(() => {
       client.release();
-    }, 10000);
+    }, 30000);
     throw error;
   } finally {
     // Release the connection back to the pool
