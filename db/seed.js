@@ -49,3 +49,4 @@ const {
   buildTables()
   .then(createInitialData)
   .catch(console.error)
+  .finally(() => client.release())
