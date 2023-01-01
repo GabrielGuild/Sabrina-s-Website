@@ -1,5 +1,4 @@
 // This is the Web Server
-const { Pool, Client } = require('pg')
 require("dotenv").config();
 // const client = require("./client")
 const express = require('express');
@@ -33,7 +32,7 @@ server.use((req, res, next) => {
 });
 
 // bring in the DB connection
-const { client } = require('./db');
+const { client } = require('./db/client');
 
 // connect to the server
 const PORT = process.env.PORT || 4000;
@@ -53,9 +52,10 @@ const handle = server.listen(PORT, async () => {
     await client.connect();
     client.on('notice', msg => console.warn('notice:', msg))
     console.log('Database is open for business!');
-    client.release()
   } catch (error) {
     console.error('Database is closed for repairs!\n', error);
+  }finally{
+    client.release();
   }
 });
 
