@@ -2,9 +2,10 @@ const {
   createUser,
   } = require('./models/user');
 
-  const client = require("./client");
+  const client = require("./client.js");
 
   async function buildTables() {
+    let client
       try{
   client.connect();
 
