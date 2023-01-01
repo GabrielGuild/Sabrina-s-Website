@@ -53,6 +53,7 @@ const handle = server.listen(PORT, async () => {
     await client.connect();
     client.on('notice', msg => console.warn('notice:', msg))
     console.log('Database is open for business!');
+    client.release();
   } catch (error) {
     console.error('Database is closed for repairs!\n', error);
   }
