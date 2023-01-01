@@ -2,10 +2,13 @@ const { createClient } = require('../client');
 const bcrypt = require('bcrypt');
 
 async function createUser({ username, password, fullname, email, isAdmin = false }) {
-    try {
+
+  let client
+
+  try {
+       client = await createClient();
       const SALT_COUNT = 10;
       const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
-      const client = await createClient();
   
       const { rows: [user] } = await client.query(`
         INSERT INTO users(username, password, fullname, email, "isAdmin")
@@ -20,12 +23,17 @@ async function createUser({ username, password, fullname, email, isAdmin = false
       return user
     } catch (error) {
       throw error;
+    }finally{
+
     }
   }
 
   async function getUser({ username, password }) {
-    try {
-      const client = await createClient();
+    
+  let client
+
+  try {
+       client = await createClient();
       const user = await getUserByUsername(username);
       if (user) {
         const hashedPassword = user.password;
@@ -49,8 +57,11 @@ async function createUser({ username, password, fullname, email, isAdmin = false
   }
 
   async function getUserById(userId) {
-    try {
-      const client = await createClient();
+    
+  let client
+
+  try {
+       client = await createClient();
       const { rows: [user] } = await client.query(`
         SELECT *
         FROM users
@@ -66,8 +77,11 @@ async function createUser({ username, password, fullname, email, isAdmin = false
   }
 
   async function getUserByUsername(username) {
-    try {
-      const client = await createClient();
+    
+  let client
+
+  try {
+       client = await createClient();
       const { rows: [user] } = await client.query(`
       SELECT  *
       FROM users
@@ -81,8 +95,11 @@ async function createUser({ username, password, fullname, email, isAdmin = false
   }
 
   async function getAllUsers() {
-    try {
-      const client = await createClient();
+    
+  let client
+
+  try {
+       client = await createClient();
       const { rows: users } = await client.query(`
         SELECT*
         FROM users;
@@ -99,8 +116,11 @@ async function createUser({ username, password, fullname, email, isAdmin = false
   }
 
   async function emailInUseCheck(emailInput) {
-    try {
-      const client = await createClient();
+    
+  let client
+
+  try {
+       client = await createClient();
       let inUse = false;
       const { rows } = await client.query(`
         SELECT email
