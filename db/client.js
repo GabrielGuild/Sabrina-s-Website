@@ -1,6 +1,5 @@
 // Connect to DB
 const { Pool, Client } = require('pg')
-const { client } = require('.')
 const connectionString = 'postgresql://GabrielGuild:v2_3vEvt_S32Kdegt4KvN89sbfGnrRfe@db.bit.io/GabrielGuild/sabrina?sslmode=require'
 
 
