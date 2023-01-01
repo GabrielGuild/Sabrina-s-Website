@@ -14,19 +14,16 @@ const pool = new Pool({
   keepAliveIntervalMillis: 30000,
 })
 
-async function createClient() {
-  try {
-    // Acquire a connection from the pool
-    const client = await pool.connect();
-    client.on('notice', msg => console.warn('notice:', msg))
-    return client;
-  } catch (error) {
-    console.error('Error creating client: ', error);
-    throw error;
-  }
-}
+// async function createClient() {
+//   try {
+//     // Acquire a connection from the pool
+//     const client = await pool.connect();
+//     client.on('notice', msg => console.warn('notice:', msg))
+//     return client;
+//   } catch (error) {
+//     console.error('Error creating client: ', error);
+//     throw error;
+//   }
+// }
 
-// Now you can use `await` to get the actual connection object
-const client = await createClient();
-
-module.exports = client;
+module.exports = pool
