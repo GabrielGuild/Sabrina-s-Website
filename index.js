@@ -1,10 +1,13 @@
 // This is the Web Server
-const { Pool } = require('pg')
+const { Pool, Client } = require('pg')
+require("dotenv").config();
+// const client = require("./client")
 const express = require('express');
 const server = express();
 const apiRouter = require('./api');
 
 // enable cross-origin resource sharing to proxy api requests
+// from localhost:3000 to localhost:4000 in local dev env
 const cors = require('cors');
 server.use(cors());
 
@@ -30,7 +33,7 @@ server.use((req, res, next) => {
 });
 
 // bring in the DB connection
-
+const { client } = require('./db');
 
 // connect to the server
 const PORT = process.env.PORT || 4000;
@@ -41,24 +44,19 @@ server.use((error, req, res, next) => {
   res.send(error);
 });
 
-// define a server handle to close open tcp connection after unit tests have run
-const { createClient } = require('./db/client');
 
-const startServer = async () => {
+// define a server handle to close open tcp connection after unit tests have run
+const handle = server.listen(PORT, async () => {
+  console.log(`Server is running on ${PORT}!`);
+
   try {
-    // Acquire a connection from the pool
-    const client = await createClient();
+    await client.connect();
     client.on('notice', msg => console.warn('notice:', msg))
     console.log('Database is open for business!');
   } catch (error) {
     console.error('Database is closed for repairs!\n', error);
-  } finally {
-    // Release the connection back to the pool
   }
-}
+});
 
-
-const handle = server.listen(PORT, startServer);
-
-// export server and handle for routes/*.test.js
+// // export server and handle for routes/*.test.js
 module.exports = { server, handle };
