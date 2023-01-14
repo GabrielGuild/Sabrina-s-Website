@@ -3,8 +3,14 @@ const {
   } = require('./models/user');
 
   const client = require("./client.js");
+  const { Client, Pool } = require('pg')
 
+  let client
+  const connectionString = 'postgresql://GabrielGuild:v2_3vEvt_S32Kdegt4KvN89sbfGnrRfe@db.bit.io/GabrielGuild/sabrina?sslmode=require'
+  
+  
   async function buildTables() {
+    client = new Client(connectionString);
     let client
       try{
   client.connect();
@@ -53,3 +59,4 @@ const {
   buildTables()
   .then(createInitialData)
   .catch(console.error)
+  .finally(() => client.end());
