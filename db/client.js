@@ -16,6 +16,6 @@ let client;
 // } else {
 //   // local / heroku client config
 // }
-client = new Client(DB_URL);
+client = new Client(connectionString);
 
 module.exports = client;
