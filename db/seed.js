@@ -10,8 +10,8 @@ const {
   
   
   async function buildTables() {
-    client = new Client(connectionString);
     let client
+    client = new Client(connectionString);
       try{
   client.connect();
 
@@ -43,7 +43,6 @@ const {
 
   async function createInitialData() {
     let client
-    const connectionString = 'postgresql://GabrielGuild:v2_3vEvt_S32Kdegt4KvN89sbfGnrRfe@db.bit.io/GabrielGuild/sabrina?sslmode=require'
     
     try {
       client = new Client(connectionString);
