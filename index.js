@@ -1,6 +1,4 @@
-// This is the Web Server
 require("dotenv").config();
-// const client = require("./client")
 const express = require('express');
 const server = express();
 const apiRouter = require('./api');
@@ -32,7 +30,8 @@ server.use((req, res, next) => {
 });
 
 // bring in the DB connection
-const { client } = require('./db/client');
+// const { client } = require('./db');
+const { Client, Pool } = require('pg')
 
 // connect to the server
 const PORT = process.env.PORT || 4000;
@@ -43,21 +42,23 @@ server.use((error, req, res, next) => {
   res.send(error);
 });
 
-
 // define a server handle to close open tcp connection after unit tests have run
 const handle = server.listen(PORT, async () => {
   console.log(`Server is running on ${PORT}!`);
-
+  let client
+  const connectionString = 'postgresql://GabrielGuild:v2_3vEvt_S32Kdegt4KvN89sbfGnrRfe@db.bit.io/GabrielGuild/sabrina?sslmode=require'
+  
   try {
+    client = new Client(connectionString);
     await client.connect();
-    client.on('notice', msg => console.warn('notice:', msg))
     console.log('Database is open for business!');
   } catch (error) {
     console.error('Database is closed for repairs!\n', error);
   }finally{
-    client.release();
+    client.end();
   }
 });
 
-// // export server and handle for routes/*.test.js
+// export server and handle for routes/*.test.js
 module.exports = { server, handle };
+

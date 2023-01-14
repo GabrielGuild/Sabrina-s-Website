@@ -1,16 +1,16 @@
 {
-  "main.css": "/static/css/main.8a310090.chunk.css",
-  "main.js": "/static/js/main.fd8884f5.chunk.js",
-  "main.js.map": "/static/js/main.fd8884f5.chunk.js.map",
-  "static/js/1.8510c8e8.chunk.js": "/static/js/1.8510c8e8.chunk.js",
-  "static/js/1.8510c8e8.chunk.js.map": "/static/js/1.8510c8e8.chunk.js.map",
-  "runtime~main.js": "/static/js/runtime~main.229c360f.js",
-  "runtime~main.js.map": "/static/js/runtime~main.229c360f.js.map",
-  "static/media/styles.css": "/static/media/background.568b034e.jpg",
+  "main.css": "/static/css/main.b1e4512e.chunk.css",
+  "main.js": "/static/js/main.ef12cabf.chunk.js",
+  "main.js.map": "/static/js/main.ef12cabf.chunk.js.map",
+  "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
+  "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
+  "static/js/2.9cf6cd66.chunk.js": "/static/js/2.9cf6cd66.chunk.js",
+  "static/js/2.9cf6cd66.chunk.js.map": "/static/js/2.9cf6cd66.chunk.js.map",
+  "index.html": "/index.html",
+  "precache-manifest.4b6281dc78d9621640f8265f8cc56b43.js": "/precache-manifest.4b6281dc78d9621640f8265f8cc56b43.js",
+  "service-worker.js": "/service-worker.js",
+  "static/css/main.b1e4512e.chunk.css.map": "/static/css/main.b1e4512e.chunk.css.map",
   "static/media/SabrinaProfile.jpg": "/static/media/SabrinaProfile.d7ddb442.jpg",
   "static/media/TheInheritance.mp4": "/static/media/TheInheritance.fbf8fdcf.mp4",
-  "static/css/main.8a310090.chunk.css.map": "/static/css/main.8a310090.chunk.css.map",
-  "index.html": "/index.html",
-  "precache-manifest.89747b2ff15968779126e9d4803a73da.js": "/precache-manifest.89747b2ff15968779126e9d4803a73da.js",
-  "service-worker.js": "/service-worker.js"
+  "static/media/styles.css": "/static/media/background.568b034e.jpg"
 }

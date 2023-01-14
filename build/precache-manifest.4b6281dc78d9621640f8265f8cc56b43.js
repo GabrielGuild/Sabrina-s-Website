@@ -1,19 +1,19 @@
 self.__precacheManifest = [
   {
-    "revision": "fd8884f593b7ef96c629",
-    "url": "/static/css/main.8a310090.chunk.css"
+    "revision": "60b50f04f2bf8151f7e4",
+    "url": "/static/css/main.b1e4512e.chunk.css"
   },
   {
-    "revision": "fd8884f593b7ef96c629",
-    "url": "/static/js/main.fd8884f5.chunk.js"
+    "revision": "60b50f04f2bf8151f7e4",
+    "url": "/static/js/main.ef12cabf.chunk.js"
   },
   {
-    "revision": "8510c8e853e23eb88177",
-    "url": "/static/js/1.8510c8e8.chunk.js"
+    "revision": "42ac5946195a7306e2a5",
+    "url": "/static/js/runtime~main.a8a9905a.js"
   },
   {
-    "revision": "229c360febb4351a89df",
-    "url": "/static/js/runtime~main.229c360f.js"
+    "revision": "e48c408a2ab4c83f4019",
+    "url": "/static/js/2.9cf6cd66.chunk.js"
   },
   {
     "revision": "568b034e2f8ef09b006d2ad57cdf4b30",
@@ -28,7 +28,7 @@ self.__precacheManifest = [
     "url": "/static/media/TheInheritance.fbf8fdcf.mp4"
   },
   {
-    "revision": "cec37777a5a67b57e7cf61f09c52e5d6",
+    "revision": "9bed8ceb6b0e12011640375225e84c2c",
     "url": "/index.html"
   }
 ];
