@@ -3,7 +3,6 @@ import {useState} from "react";
 import {
     NavLink,
      Route,
-     Routes,
     } from "react-router-dom";
 import {
     Home,
@@ -119,12 +118,16 @@ const App =() => {
         <span className="bar"></span>
     </div>
     </div>
-    <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/bio" element={<Bio />} />
-        <Route path="/login" element={<Login token={token} setToken={setToken} user={user} setUser={setUser}/>} />
-        <Route path="/admin" element={<Admin token={token} user={user}/>}/>
-    </Routes>
+    <Route path="/">
+        <Home />
+    </Route>
+    <Route path="/bio">
+        <Bio />
+    </Route>
+    <Route path="/login">
+        <Login token={token} setToken={setToken} user={user} setUser={setUser}/>
+    </Route>
+        {/* <Route path="/admin" element={<Admin token={token} user={user}/>}/> */}
       
 
       <div className="Footer">

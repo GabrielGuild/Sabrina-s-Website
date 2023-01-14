@@ -1,11 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { fetchAllUsers} from "../utilities/apiCalls";
-import {
-  filterForOtherAdmins,
-  filterForCurrentAdmin,
-  filterForNonAdmins,
-} from "../utilities/utils";
 
 const Admin = ({ user, token }) => {
   const [allUsersData, setAllUsersData] = useState([])
@@ -59,13 +54,6 @@ const Admin = ({ user, token }) => {
               return (
                 <div key={userData.id} className='email'>
                   <p> {userData.email},</p>
-                  {/* {
-                    (userData.id !== user.id) ?
-                      <button onClick={(event) => {
-                        handleAdminStatusEdit(event, userData)
-                      }}>{userData.isAdmin ? 'Remove Admin' : 'Make Admin'}</button> :
-                      null
-                  } */}
                 </div>
               )
             })) :

@@ -31,7 +31,6 @@ apiRouter.use(async (req, res, next) => {
   }
 });
 
-
 apiRouter.get('/health', (req, res, next) => {
   res.send({
     healthy: true,
@@ -41,6 +40,22 @@ apiRouter.get('/health', (req, res, next) => {
 // ROUTER: /api/users
 const usersRouter = require('./users');
 apiRouter.use('/users', usersRouter);
+
+// ROUTER: /api/inventory
+const inventoryRouter = require('./inventory');
+apiRouter.use('/inventory', inventoryRouter);
+
+// ROUTER: /api/reviews
+const reviewsRouter = require('./reviews');
+apiRouter.use('/reviews', reviewsRouter);
+
+// ROUTER: /api/cart_inventory
+const cartInventoryRouter = require('./cart_inventory');
+apiRouter.use('/cart_inventory', cartInventoryRouter);
+
+// ROUTER: /api/orders
+const ordersRouter = require('./orders');
+apiRouter.use('/orders', ordersRouter);
 
 // 404 not found 
 apiRouter.use('*', async (req, res) => {
