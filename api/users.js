@@ -25,7 +25,6 @@ usersRouter.get('/', async (req, res, next) => {
 
 usersRouter.post('/login', async (req, res, next) => {
   const { username, password } = req.body;  
-  console.log("req.body ",req.body )
   if (!username || !password) {
     res.send({
       error: 'Error',
