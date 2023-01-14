@@ -36,11 +36,17 @@ const {
 } catch (error) {
   console.error("Error building tables! Buildtables");
   throw error;
+  }finally{
+    client.end();
   }
 }
 
   async function createInitialData() {
-  try{
+    let client
+    const connectionString = 'postgresql://GabrielGuild:v2_3vEvt_S32Kdegt4KvN89sbfGnrRfe@db.bit.io/GabrielGuild/sabrina?sslmode=require'
+    
+    try {
+      client = new Client(connectionString);
     client.connect();
       const startingUsers = [
           {username:"Gabriel", password: "Redweaver1", fullname: "Gabriel Guild", email: "gabecg@gmail.com", isAdmin: true},
@@ -53,10 +59,11 @@ const {
   } catch (error) {
       console.error("Error creating tables! create Data")
       throw error
+  }finally{
+    client.end();
   }
   }
 
   buildTables()
   .then(createInitialData)
   .catch(console.error)
-  .finally(() => client.end());
