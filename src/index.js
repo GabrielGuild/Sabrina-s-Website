@@ -1,7 +1,6 @@
 import React from "react";
 import  ReactDOM from "react-dom";
 import {BrowserRouter} from "react-router-dom";
-
 import {App} from "./components";
 
 import styles from "./styles.css"
@@ -11,5 +10,4 @@ ReactDOM.render(
     <App />
     </BrowserRouter>,
     document.getElementById('app')
-
-)
+);
