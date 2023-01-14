@@ -1,24 +1,31 @@
-const { Client } = require('pg');
+// Connect to DB
+const { Client } = require('pg')
+const connectionString = 'postgresql://GabrielGuild:v2_3vEvt_S32Kdegt4KvN89sbfGnrRfe@db.bit.io/GabrielGuild/sabrina?sslmode=require'
 
-const DB_NAME = 'grace-dev';
+// const pool = new Pool({
+//   user: 'GabrielGuild',
+//   host: 'db.bit.io',
+//   database: 'GabrielGuild/sabrina',
+//   password: 'v2_3vFTT_4vuiJ7YNeP58LnjKacCxKLY',
+//   port: 5432,
+//   ssl: true,
+//   max: 20,
+//   keepAlives: true,
+//   keepAliveIntervalMillis: 30000,
+// })
 
-const DB_URL =
- `postgresql://GabrielGuild:v2_3vGWZ_eAzRpq438777wLkVZx99VKN@db.bit.io/GabrielGuild/Grace-shopper?sslmode=require`;
-
-let client;
-
-// github actions client config
-// if (process.env.CI) {
-//   client = new Client({
-//     host: 'localhost',
-//     port: 5432,
-//     user: 'postgres',
-//     password: 'postgres',
-//     database: 'postgres',
-//   });
-// } else {
-//   // local / heroku client config
+// async function createClient() {
+//   try {
+//     // Acquire a connection from the pool
+//     const client = await pool.connect();
+//     client.on('notice', msg => console.warn('notice:', msg))
+//     return client;
+//   } catch (error) {
+//     console.error('Error creating client: ', error);
+//     throw error;
+//   }
 // }
-client = new Client(DB_URL);
+let client
+client = new Client(connectionString);
 
 module.exports = client;

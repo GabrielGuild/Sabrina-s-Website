@@ -1,21 +1,19 @@
 const express = require('express');
 const usersRouter = express.Router();
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = process.env;
-const { requireAdmin } = require('./utils');
+const { requireLogin, requireAdmin } = require('./utils');
 const {
   createUser,
   getUser,
-  getReviewsByUserId,
   getUserByUsername,
   getAllUsers,
-  emailInUseCheck,
-  makeUserAdminById,
-  removeUserAsAdminById,
-  getDetailedUserCartByUserId
+  emailInUseCheck
 } = require('../db');
 
-usersRouter.get('/', requireAdmin, async (req, res, next) => {
+//api calls below
+usersRouter.get('/', async (req, res, next) => {
   try {
     const allUsers = await getAllUsers();
 
@@ -27,6 +25,7 @@ usersRouter.get('/', requireAdmin, async (req, res, next) => {
 
 usersRouter.post('/login', async (req, res, next) => {
   const { username, password } = req.body;  
+  console.log("req.body ",req.body )
   if (!username || !password) {
     res.send({
       error: 'Error',
@@ -98,7 +97,7 @@ usersRouter.post('/register', async (req, res, next) => {
         error: 'Error'
       })
     } else {
-      const user = await createUser({ username, password, fullname, email })
+      const user = await createUser({ username, password, address, fullname, email })
   
       const token = jwt.sign({
         id: user.id,
@@ -111,65 +110,6 @@ usersRouter.post('/register', async (req, res, next) => {
         user,
       })
     }
-  } catch ({ name, message }) {
-    next({ name, message })
-  }
-});
-
-usersRouter.patch('/:userId', requireAdmin, async (req, res, next) => {
-  const { userId } = req.params;
-  const { isAdmin } = req.body;
-
-  if (req.user.id === userId) {
-    res.send({
-      error: 'Error',
-      name: 'AdminConflictError',
-      message: 'An admin cannot change their admin status.'
-    })
-  }
-
-  try {
-    let user;
-    if (isAdmin) {
-      user = await makeUserAdminById({id: userId});
-    } else {
-      user = await removeUserAsAdminById({id: userId});
-    }
-    
-    res.send(user);
-  } catch ({name, message}) {
-    next({name, message})
-  }
-})
-
-// get my reviews
-usersRouter.get('/:userId/reviews', async (req, res, next) => {
-  const { userId } = req.params;
-
-  try {
-    const userReviews = await getReviewsByUserId(userId);
-
-    res.send(userReviews);
-  } catch ({ name, message }) {
-    next({ name, message })
-  }
-});
-
-// get my cart
-usersRouter.get('/:userId/cart', async (req, res, next) => {
-  const { userId } = req.params;
-
-  if (req.user.id !== userId) {
-    res.status(401).send({
-      name: 'UnauthorizedUserError',
-      message: `User ${req.user ? req.user.username : null} is not authorized to view this cart.`
-    })
-  }
-
-  try {
-    const cart = await getDetailedUserCartByUserId({userId});
-
-    res.send(cart);
   } catch ({ name, message }) {
     next({ name, message })
   }

@@ -4,12 +4,12 @@ import {BrowserRouter} from "react-router-dom";
 
 import {App} from "./components";
 
-import styles from "./style/styles.css"
+import styles from "./styles.css"
 
 ReactDOM.render(
     <BrowserRouter>
     <App />
     </BrowserRouter>,
     document.getElementById('app')
-        // "start": "react-scripts --openssl-legacy-provider start",
+
 )
