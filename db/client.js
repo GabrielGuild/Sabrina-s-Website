@@ -6,7 +6,7 @@ const pool = new Pool({
     user: 'GabrielGuild',
     host: 'db.bit.io',
     database: 'GabrielGuild/sabrina',
-    password: 'v2_3y4DB_FiX2ugR6d5s5ksdADiDMExB',
+    password: 'vv2_3y4MR_4aGBreuEdYB5dyVUEzkvcdK',
     port: 5432
   });
 
