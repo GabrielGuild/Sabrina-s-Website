@@ -45,14 +45,16 @@ server.use((error, req, res, next) => {
 // define a server handle to close open tcp connection after unit tests have run
 const handle = server.listen(PORT, async () => {
   console.log(`Server is running on ${PORT}!`);
-
-  try {
-    await pool.connect();
+  pool.on('connect', () => {
     console.log('Database is open for business!');
-  } catch (error) {
-    console.error('Database is closed for repairs!\n', error);
-  }
+  });
 });
 
+process.on('SIGINT', async () => {
+    console.log('Closing pool');
+    await pool.end();
+    process.exit()
+  });
+  
 // export server and handle for routes/*.test.js
 module.exports = { server, handle };
