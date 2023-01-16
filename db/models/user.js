@@ -83,7 +83,7 @@ async function createUser({ username, password, fullname, email, isAdmin = false
         FROM users;
       `);
   
-      users.forEach(user => {
+      user.forEach(user => {
         delete user.password
       })
   
