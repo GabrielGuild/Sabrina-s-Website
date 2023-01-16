@@ -50,11 +50,11 @@ const handle = server.listen(PORT, async () => {
   });
 });
 
-// process.on('SIGINT', async () => {
-//     console.log('Closing pool');
-//     await pool.end();
-//     process.exit()
-//   });
+process.on('SIGINT', async () => {
+    console.log('Closing pool');
+    await pool.end();
+    process.exit()
+  });
 
 // export server and handle for routes/*.test.js
-module.exports = { server, handle };
+ module.exports = { server, handle };
