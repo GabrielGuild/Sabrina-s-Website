@@ -1,7 +1,7 @@
-const client = require('./client');
+const pool = require('./client');
 const models = require('./models');
 
 module.exports = {
-  client,
+  pool,
   ...models
 };
