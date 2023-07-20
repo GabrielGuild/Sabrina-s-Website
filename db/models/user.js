@@ -1,124 +1,130 @@
-const pool = require('../client');
 const bcrypt = require('bcrypt');
+const pool = require('../client');
 
 async function createUser({ username, password, fullname, email, isAdmin = false }) {
-    try {
-      const SALT_COUNT = 10;
-      const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
-      pool.connect(function(err, client, done) {
-      const { rows: [users] } =  client.query(`
-        INSERT INTO users(username, password, fullname, email, "isAdmin")
-        VALUES($1, $2, $3, $4, $5)
-        ON CONFLICT (username) DO NOTHING
-        RETURNING *;
-        `, [username, hashedPassword, fullname, email, isAdmin]
-      );
-  
-      delete users.password
-      done();});
-      return user
-    } catch (error) {
-      throw error;
-    }
-  }
+  try {
+    const SALT_COUNT = 10;
+    const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
 
-  async function getUser({ username, password }) {
-    try {
-      
-      const user = await getUserByUsername(username);
-      if (users) {
-        const hashedPassword = user.password;
-        const isValid = await bcrypt.compare(password, hashedPassword)
-        if (isValid) {
-          delete user.password
-          return user
-        } else {
-          return 'passwordNotValid'
-        }
+    const { rows: [user] } = await pool.query(
+      `
+      INSERT INTO users(username, password, fullname, email, "isAdmin")
+      VALUES($1, $2, $3, $4, $5)
+      ON CONFLICT (username) DO NOTHING
+      RETURNING *;
+      `,
+      [username, hashedPassword, fullname, email, isAdmin]
+    );
+
+    delete user.password;
+    return user;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getUser({ username, password }) {
+  try {
+    const user = await getUserByUsername(username);
+    if (user) {
+      const hashedPassword = user.password;
+      const isValid = await bcrypt.compare(password, hashedPassword);
+      if (isValid) {
+        delete user.password;
+        return user;
       } else {
-        return 'userDoesNotExist'
+        return 'passwordNotValid';
       }
-    } catch (error) {
-      throw error
+    } else {
+      return 'userDoesNotExist';
     }
+  } catch (error) {
+    throw error;
   }
+}
 
-  async function getUserById(userId) {
-    try {
-      pool.connect(function(err, client, done) {
-        const { rows: [users] } =  client.query(`
-        SELECT *
-        FROM users
-        WHERE id = $1
-      `, [userId])
-  
-      delete users.password
-      done();});
-      return user
-    } catch (error) {
-      throw error
-    }
+async function getUserById(userId) {
+  try {
+    const { rows: [user] } = await pool.query(
+      `
+      SELECT *
+      FROM users
+      WHERE id = $1;
+      `,
+      [userId]
+    );
+
+    delete user.password;
+    return user;
+  } catch (error) {
+    throw error;
   }
+}
 
-  async function getUserByUsername(username) {
-    try {
-      pool.connect(function(err, client, done) {
-        const { rows: [users] } =  client.query(`
+async function getUserByUsername(username) {
+  try {
+    const { rows: [user] } = await pool.query(
+      `
       SELECT  *
       FROM users
-      WHERE username = $1
-      `, [username])
-      done();});
-      return user
-    } catch (error) {
-      throw error
-    }
-  }
+      WHERE username = $1;
+      `,
+      [username]
+    );
 
-  async function getAllUsers() {
-    try {
-      pool.connect(function(err, client, done) {
-        const { rows: [users] } =  client.query(`
-        SELECT*
-        FROM users;
-      `);
-  
-      users.forEach(user => {
-        delete users.password
-      })
-      done();});
-      return users;
-    } catch (error) {
-      throw error;
-    }
+    delete user.password;
+    return user;
+  } catch (error) {
+    throw error;
   }
+}
 
-  async function emailInUseCheck(emailInput) {
-    try {
-      let inUse = false;
-      pool.connect(function(err, client, done) {
-        const { rows: [users] } =  client.query(`
-        SELECT email
-        FROM users;
-      `);
-  
-      rows.forEach(row => {
-        if (row.email && (row.email === emailInput)) { 
-          inUse = true;
-        }
-      })
-      done();});
-      return inUse
-    } catch (error) {
-      throw error
-    }
+async function getAllUsers() {
+  try {
+    const { rows: users } = await pool.query(
+      `
+      SELECT *
+      FROM users;
+      `
+    );
+
+    users.forEach(user => {
+      delete user.password;
+    });
+
+    return users;
+  } catch (error) {
+    throw error;
   }
+}
 
-  module.exports = {
-    createUser,
-    getUser,
-    getUserById,
-    getUserByUsername,
-    getAllUsers,
-    emailInUseCheck
-  };
+async function emailInUseCheck(emailInput) {
+  try {
+    const { rows } = await pool.query(
+      `
+      SELECT email
+      FROM users;
+      `
+    );
+
+    let inUse = false;
+    rows.forEach(row => {
+      if (row.email && row.email === emailInput) {
+        inUse = true;
+      }
+    });
+
+    return inUse;
+  } catch (error) {
+    throw error;
+  }
+}
+
+module.exports = {
+  createUser,
+  getUser,
+  getUserById,
+  getUserByUsername,
+  getAllUsers,
+  emailInUseCheck
+};
