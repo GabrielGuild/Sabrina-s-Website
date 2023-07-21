@@ -22,6 +22,7 @@ usersRouter.get('/', async (req, res, next) => {
 });
 
 usersRouter.post('/login', async (req, res, next) => {
+  console.log('Login route called'); // Added console.log statement
   const { username, password } = req.body;
 
   if (!username || !password) {
@@ -33,6 +34,7 @@ usersRouter.post('/login', async (req, res, next) => {
   }
 
   try {
+    console.log(`Attempting to get user with username: ${username}`); // Added console.log statement
     const user = await getUser({ username, password });
 
     if (!user || !user.id) {
@@ -43,6 +45,7 @@ usersRouter.post('/login', async (req, res, next) => {
       });
     }
 
+    console.log(`Checking if password is valid for user with id: ${user.id}`); // Added console.log statement
     const isValidPassword = await bcrypt.compare(password, user.password);
 
     if (!isValidPassword) {
@@ -53,6 +56,7 @@ usersRouter.post('/login', async (req, res, next) => {
       });
     }
 
+    console.log(`Generating token for user with id: ${user.id}`); // Added console.log statement
     const token = jwt.sign({
       id: user.id,
       username: user.username,
@@ -64,6 +68,7 @@ usersRouter.post('/login', async (req, res, next) => {
       message: "You're logged in!",
     });
   } catch (error) {
+    console.error(error); // Added console.error statement
     next(error);
   }
 });
