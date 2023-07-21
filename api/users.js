@@ -25,6 +25,7 @@ usersRouter.get('/', async (req, res, next) => {
 });
 
 usersRouter.post('/login', async (req, res, next) => {
+  console.log("The api is running the request")
   const { username, password } = req.body;
   if (!username || !password) {
     res.status(400).json({
@@ -69,6 +70,7 @@ usersRouter.post('/login', async (req, res, next) => {
 });
 
 usersRouter.post('/register', async (req, res, next) => {
+  console.log("The api is running the request")
   try {
     const { username, password, address, fullname, email } = req.body;
 
