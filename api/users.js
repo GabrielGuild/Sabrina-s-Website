@@ -25,49 +25,48 @@ usersRouter.get('/', async (req, res, next) => {
 });
 
 usersRouter.post('/login', async (req, res, next) => {
-  console.log("The api is running the request")
-  const { username, password } = req.body;
+  console.log('the request reached the api')
+  const { username, password } = req.body;  
   if (!username || !password) {
-    res.status(400).json({
-      error: 'MissingCredentialsError',
-      message: "Missing username or password.",
-    });
-    return;
+    res.send({
+      error: 'Error',
+      name: 'MissingCredentialsError',
+      message: "Missing username or password."
+    })
   }
 
   try {
-    const user = await getUser({ username, password });
-
+    const user = await getUser({username, password});
+console.log('sending the request to the db')
     if (user.id) {
-      const token = jwt.sign(
-        {
-          id: user.id,
-          username: user.username,
-        },
-        JWT_SECRET
-      );
-
-      res.json({ user, token, message: "You're logged in!" });
+      const token = jwt.sign({
+        id: user.id,
+        username: user.username
+      }, JWT_SECRET);
+      res.send({ user, token, message: "you're logged in!" })
     } else if (user === 'passwordNotValid') {
-      res.status(401).json({
-        error: 'PasswordNotValid',
-        message: `Incorrect password for the username.`,
-      });
+      res.send({
+        error: 'Error',
+        name: 'PasswordNotValid',
+        message: `Incorrect password for the username.`
+      })
     } else if (user === 'userDoesNotExist') {
-      res.status(404).json({
-        error: 'UserNotFoundError',
-        message: 'User not found.',
-      });
+      res.send({
+        error: 'Error',
+        name:'UserNotFoundError',
+        message: 'User not found.'
+      })
     } else {
       next({
         name: 'LoginError',
-        message: 'There was an error during login.',
-      });
+        message: 'There was an error during login.'
+      })
     }
-  } catch (error) {
-    next(error);
+  } catch ({name, message}) {
+    next({name, message});
   }
 });
+
 
 usersRouter.post('/register', async (req, res, next) => {
   console.log("The api is running the request")
