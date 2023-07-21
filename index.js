@@ -36,11 +36,8 @@ const client = require('./db/client');
 const PORT = process.env.PORT || 4000;
 let handle; // Declare the handle variable outside the callback
 
-client.connect((err) => {
-  if (err) {
-    console.error('Could not connect to Postgres:', err);
-    process.exit(1);
-  }
+// bring in the DB connection
+const { client } = require('./db');
 
   // Start the server only after successfully connecting to the database
   handle = server.listen(PORT, () => {
