@@ -10,11 +10,10 @@ async function createUser({ username, password, fullname, email, isAdmin = false
     const query = {
       text: `
         INSERT INTO users(username, password, fullname, email, "isAdmin")
-        VALUES('$1', '$2', '$3', '$4', '$5')
+        VALUES('${username}', '${hashedPassword}', '${fullname}', '${email}', ${isAdmin})
         ON CONFLICT (username) DO NOTHING
         RETURNING *;
-      `,
-      values: [username, hashedPassword, fullname, email, isAdmin],
+      `
     };
 
     const { rows: [user] } = await client.query(query);
@@ -25,6 +24,7 @@ async function createUser({ username, password, fullname, email, isAdmin = false
     throw error;
   }
 }
+
 
 async function getUser({ username, password }) {
   try {
@@ -52,7 +52,7 @@ async function getUserById(userId) {
       text: `
         SELECT *
         FROM users
-        WHERE id = '$1';
+        WHERE id = ${userId}';
       `,
       values: [userId],
     };
@@ -72,9 +72,8 @@ async function getUserByUsername(username) {
       text: `
         SELECT *
         FROM users
-        WHERE username = '$1';
-      `,
-      values: [username],
+        WHERE username = '${username}';
+      `
     };
 
     const { rows: [user] } = await client.query(query);
