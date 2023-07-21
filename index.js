@@ -1,10 +1,12 @@
-// This is the Web Server
-require("dotenv").config();
+require('dotenv').config();
 const express = require('express');
 const server = express();
 const apiRouter = require('./api');
+const { client } = require('./db');
 
-// enable cross-origin resource sharing to proxy api requests
+const PORT = process.env.PORT || 4000;
+
+// enable cross-origin resource sharing to proxy API requests
 // from localhost:3000 to localhost:4000 in local dev env
 const cors = require('cors');
 server.use(cors());
@@ -14,45 +16,55 @@ const morgan = require('morgan');
 server.use(morgan('dev'));
 
 // handle application/json requests
-server.use(express.urlencoded({extended: false}));
+server.use(express.urlencoded({ extended: false }));
 server.use(express.json());
 
-// here's our static files
+// serve static files
 const path = require('path');
 server.use(express.static(path.join(__dirname, 'build')));
 
-
-// here's our API
+// use the API router
 server.use('/api', apiRouter);
 
-// by default serve up the react app if we don't recognize the route
-server.use((req, res, next) => {
+// default route to serve the React app
+server.use((req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-// bring in the DB connection
-const { client } = require('./db');
+// start the server
+async function startServer() {
+  try {
+    await client.connect();
+    console.log('Database is open for business!');
+    const handle = server.listen(PORT, () => {
+      console.log(`Server is running on ${PORT}!`);
+    });
 
-// connect to the server
-const PORT = process.env.PORT || 4000;
+    // Graceful shutdown
+    process.on('SIGINT', async () => {
+      console.log('Closing database connection...');
+      await client.end();
+      console.log('Database connection closed.');
+      console.log('Shutting down server...');
+      handle.close(() => {
+        console.log('Server has been shut down.');
+        process.exit();
+      });
+    });
+  } catch (error) {
+    console.error('Database connection failed!\n', error);
+    process.exit(1);
+  }
+}
 
-// Error handler next
+// Start the server
+startServer();
+
+// Error handler
 server.use((error, req, res, next) => {
   res.status(500);
   res.send(error);
 });
 
-// define a server handle to close open tcp connection after unit tests have run
-const handle = server.listen(PORT, async () => {
-  console.log(`Server is running on ${PORT}!`);
-
-  try {
-    await client.connect();
-    console.log('Database is open for business!');
-  } catch (error) {
-    console.error('Database is closed for repairs!\n', error);
-  }
-});
-
 // export server and handle for routes/*.test.js
-module.exports = { server, handle };
+module.exports = { server }
