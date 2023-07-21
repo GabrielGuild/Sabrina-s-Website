@@ -80,7 +80,7 @@ async function getUserByUsername(username) {
 
     const { rows: [user] } = await client.query(query);
 
-    delete user.password;
+    
     return user;
   } catch (error) {
     throw error;
