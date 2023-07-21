@@ -6,7 +6,7 @@ const DB_PASSWORD = 'xZmGQutOjhSfATX_LYAqn6bDtV5RlNjN';
 const DB_HOST = 'otto.db.elephantsql.com';
 const DB_PORT = 5432;
 
-const DB_URL = `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
+const DB_URL = `postgres://ybehutku:xZmGQutOjhSfATX_LYAqn6bDtV5RlNjN@otto.db.elephantsql.com/ybehutku`;
 
 const client = new Client({
   connectionString: DB_URL,
