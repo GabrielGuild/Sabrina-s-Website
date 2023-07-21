@@ -10,7 +10,7 @@ async function createUser({ username, password, fullname, email, isAdmin = false
     const query = {
       text: `
         INSERT INTO users(username, password, fullname, email, "isAdmin")
-        VALUES($1, $2, $3, $4, $5)
+        VALUES('$1', '$2', '$3', '$4', '$5')
         ON CONFLICT (username) DO NOTHING
         RETURNING *;
       `,
@@ -52,7 +52,7 @@ async function getUserById(userId) {
       text: `
         SELECT *
         FROM users
-        WHERE id = $1;
+        WHERE id = '$1';
       `,
       values: [userId],
     };
@@ -72,7 +72,7 @@ async function getUserByUsername(username) {
       text: `
         SELECT *
         FROM users
-        WHERE username = $1;
+        WHERE username = '$1';
       `,
       values: [username],
     };
