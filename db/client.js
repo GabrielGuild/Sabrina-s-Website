@@ -1,24 +1,15 @@
 const { Client } = require('pg');
 
-const DB_NAME = 'grace-dev';
+const DB_NAME = 'ybehutku';
+const DB_USER = 'ybehutku';
+const DB_PASSWORD = 'xZmGQutOjhSfATX_LYAqn6bDtV5RlNjN';
+const DB_HOST = 'otto.db.elephantsql.com';
+const DB_PORT = 5432;
 
-const DB_URL =
- `postgres://ybehutku:xZmGQutOjhSfATX_LYAqn6bDtV5RlNjN@otto.db.elephantsql.com/ybehutku`;
+const DB_URL = `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
 
-let client;
-
-// github actions client config
-// if (process.env.CI) {
-//   client = new Client({
-//     host: 'localhost',
-//     port: 5432,
-//     user: 'postgres',
-//     password: 'postgres',
-//     database: 'postgres',
-//   });
-// } else {
-//   // local / heroku client config
-// }
-client = new Client(DB_URL);
+const client = new Client({
+  connectionString: DB_URL,
+});
 
 module.exports = client;
