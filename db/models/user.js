@@ -126,5 +126,5 @@ module.exports = {
   getUserById,
   getUserByUsername,
   getAllUsers,
-  emailInUseCheck
+  emailInUseCheck,
 };
