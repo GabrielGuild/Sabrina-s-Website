@@ -12,116 +12,120 @@ const {
   emailInUseCheck
 } = require('../db');
 
+// ... All your imports and setup ...
+
 //api calls below
 usersRouter.get('/', async (req, res, next) => {
   try {
     const allUsers = await getAllUsers();
-
-    res.send(allUsers)
+    res.json(allUsers);
   } catch (error) {
-    throw error;
+    next(error);
   }
 });
 
 usersRouter.post('/login', async (req, res, next) => {
-  const { username, password } = req.body;  
+  const { username, password } = req.body;
   if (!username || !password) {
-    res.send({
-      error: 'Error',
-      name: 'MissingCredentialsError',
-      message: "Missing username or password."
-    })
+    res.status(400).json({
+      error: 'MissingCredentialsError',
+      message: "Missing username or password.",
+    });
+    return;
   }
 
   try {
-    const user = await getUser({username, password});
+    const user = await getUser({ username, password });
 
     if (user.id) {
-      const token = jwt.sign({
-        id: user.id,
-        username: user.username
-      }, JWT_SECRET);
+      const token = jwt.sign(
+        {
+          id: user.id,
+          username: user.username,
+        },
+        JWT_SECRET
+      );
 
-      res.send({ user, token, message: "you're logged in!" })
+      res.json({ user, token, message: "You're logged in!" });
     } else if (user === 'passwordNotValid') {
-      res.send({
-        error: 'Error',
-        name: 'PasswordNotValid',
-        message: `Incorrect password for the username.`
-      })
+      res.status(401).json({
+        error: 'PasswordNotValid',
+        message: `Incorrect password for the username.`,
+      });
     } else if (user === 'userDoesNotExist') {
-      res.send({
-        error: 'Error',
-        name:'UserNotFoundError',
-        message: 'User not found.'
-      })
+      res.status(404).json({
+        error: 'UserNotFoundError',
+        message: 'User not found.',
+      });
     } else {
       next({
         name: 'LoginError',
-        message: 'There was an error during login.'
-      })
+        message: 'There was an error during login.',
+      });
     }
-  } catch ({name, message}) {
-    next({name, message});
+  } catch (error) {
+    next(error);
   }
 });
 
 usersRouter.post('/register', async (req, res, next) => {
-
   try {
-    const { username, password, address, fullname, email } = req.body
-    
+    const { username, password, address, fullname, email } = req.body;
+
     if (password.length < 8) {
-      res.send({
-        error: 'Error',
-        message: 'Password Too Short!',
-        name: 'Password Error'
-      })
+      res.status(400).json({
+        error: 'PasswordError',
+        message: 'Password needs to be at least 8 characters',
+      });
+      return;
     }
-    
-    const _user = await getUserByUsername(username)
+
+    const _user = await getUserByUsername(username);
     if (_user) {
-      res.send({
+      res.status(409).json({
         name: 'UserExistsError',
         message: `Username ${username} is already taken.`,
-        error: 'Error'
-      })
+      });
+      return;
     }
 
     const emailAlreadyInUse = await emailInUseCheck(email);
     if (emailAlreadyInUse) {
-      res.send({
+      res.status(409).json({
         name: 'EmailAlreadyUsed',
         message: `The email address ${email} has already been used by another user.`,
-        error: 'Error'
-      })
-    } else {
-      const user = await createUser({ username, password, address, fullname, email })
-  
-      const token = jwt.sign({
-        id: user.id,
-        username: user.username
-      }, JWT_SECRET);
-  
-      res.send({
-        message: "You are signed up.",
-        token,
-        user,
-      })
+      });
+      return;
     }
-  } catch ({ name, message }) {
-    next({ name, message })
+
+    const user = await createUser({ username, password, address, fullname, email });
+
+    const token = jwt.sign(
+      {
+        id: user.id,
+        username: user.username,
+      },
+      JWT_SECRET
+    );
+
+    res.json({
+      message: "You are signed up.",
+      token,
+      user,
+    });
+  } catch (error) {
+    next(error);
   }
 });
 
-usersRouter.get('/me', async(req, res, next) => {
+usersRouter.get('/me', requireLogin, async (req, res, next) => {
   if (req.user) {
-    res.send(req.user)
+    res.json(req.user);
   } else {
     next({
-      name: 'UserFetchError', 
-      message: 'There was an error fetching user data. Please try logging in.'
-    })
+      name: 'UserFetchError',
+      message: 'There was an error fetching user data. Please try logging in.',
+    });
   }
 });
 
