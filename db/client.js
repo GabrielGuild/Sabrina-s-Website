@@ -1,23 +1,24 @@
-// Connect to DB
-var pg = require('pg');
+const { Client } = require('pg');
 
-var conString = 'postgres://ybehutku:xZmGQutOjhSfATX_LYAqn6bDtV5RlNjN@otto.db.elephantsql.com/ybehutku';
-const client = new pg.Client(conString);
+const DB_NAME = 'grace-dev';
 
-client.connect(function(err) {
-  if (err) {
-    return console.error('could not connect to postgres', err);
-  }
+const DB_URL =
+ `postgres://ybehutku:xZmGQutOjhSfATX_LYAqn6bDtV5RlNjN@otto.db.elephantsql.com/ybehutku`;
 
-  client.query('SELECT NOW() AS "theTime"', function(err, result) {
-    if (err) {
-      return console.error('error running query', err);
-    }
+let client;
 
-    console.log(result.rows[0].theTime); // >> output: 2018-08-23T14:02:57.117Z
-    client.end();
-  });
-});
-
+// github actions client config
+// if (process.env.CI) {
+//   client = new Client({
+//     host: 'localhost',
+//     port: 5432,
+//     user: 'postgres',
+//     password: 'postgres',
+//     database: 'postgres',
+//   });
+// } else {
+//   // local / heroku client config
+// }
+client = new Client(DB_URL);
 
 module.exports = client;
