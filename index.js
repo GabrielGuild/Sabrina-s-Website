@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require('express');
 const server = express();
 const apiRouter = require('./api');
+const pg = require('pg');
 
 // enable cross-origin resource sharing to proxy api requests
 // from localhost:3000 to localhost:4000 in local dev env
@@ -33,6 +34,7 @@ const client = require('./db/client');
 
 // Connect to the server
 const PORT = process.env.PORT || 4000;
+let handle; // Declare the handle variable outside the callback
 
 client.connect((err) => {
   if (err) {
@@ -41,7 +43,7 @@ client.connect((err) => {
   }
 
   // Start the server only after successfully connecting to the database
-  const handle = server.listen(PORT, () => {
+  handle = server.listen(PORT, () => {
     console.log(`Server is running on ${PORT}!`);
   });
 
