@@ -2,7 +2,7 @@
 var pg = require('pg');
 
 var conString = 'postgres://ybehutku:xZmGQutOjhSfATX_LYAqn6bDtV5RlNjN@otto.db.elephantsql.com/ybehutku';
-var client = new pg.Client(conString);
+const client = new pg.Client(conString);
 
 client.connect(function(err) {
   if (err) {
@@ -18,5 +18,6 @@ client.connect(function(err) {
     client.end();
   });
 });
+
 
 module.exports = client;
