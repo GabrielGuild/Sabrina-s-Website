@@ -31,7 +31,7 @@ server.use((req, res, next) => {
 });
 
 // bring in the DB connection  
-const { pool } = require('./db');
+const { client } = require('./db');
 
 // connect to the server
 const PORT = process.env.PORT || 4000;
