@@ -1,20 +1,23 @@
 const bcrypt = require('bcrypt');
-const pool = require('../client');
+const { Client } = require('pg');
+const client = require('../client');
 
 async function createUser({ username, password, fullname, email, isAdmin = false }) {
   try {
     const SALT_COUNT = 10;
     const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
 
-    const { rows: [user] } = await pool.query(
-      `
-      INSERT INTO users(username, password, fullname, email, "isAdmin")
-      VALUES($1, $2, $3, $4, $5)
-      ON CONFLICT (username) DO NOTHING
-      RETURNING *;
+    const query = {
+      text: `
+        INSERT INTO users(username, password, fullname, email, "isAdmin")
+        VALUES($1, $2, $3, $4, $5)
+        ON CONFLICT (username) DO NOTHING
+        RETURNING *;
       `,
-      [username, hashedPassword, fullname, email, isAdmin]
-    );
+      values: [username, hashedPassword, fullname, email, isAdmin],
+    };
+
+    const { rows: [user] } = await client.query(query);
 
     delete user.password;
     return user;
@@ -45,14 +48,16 @@ async function getUser({ username, password }) {
 
 async function getUserById(userId) {
   try {
-    const { rows: [user] } = await pool.query(
-      `
-      SELECT *
-      FROM users
-      WHERE id = $1;
+    const query = {
+      text: `
+        SELECT *
+        FROM users
+        WHERE id = $1;
       `,
-      [userId]
-    );
+      values: [userId],
+    };
+
+    const { rows: [user] } = await client.query(query);
 
     delete user.password;
     return user;
@@ -63,14 +68,16 @@ async function getUserById(userId) {
 
 async function getUserByUsername(username) {
   try {
-    const { rows: [user] } = await pool.query(
-      `
-      SELECT  *
-      FROM users
-      WHERE username = $1;
+    const query = {
+      text: `
+        SELECT *
+        FROM users
+        WHERE username = $1;
       `,
-      [username]
-    );
+      values: [username],
+    };
+
+    const { rows: [user] } = await client.query(query);
 
     delete user.password;
     return user;
@@ -81,12 +88,14 @@ async function getUserByUsername(username) {
 
 async function getAllUsers() {
   try {
-    const { rows: users } = await pool.query(
-      `
-      SELECT *
-      FROM users;
-      `
-    );
+    const query = {
+      text: `
+        SELECT *
+        FROM users;
+      `,
+    };
+
+    const { rows: users } = await client.query(query);
 
     users.forEach(user => {
       delete user.password;
@@ -100,12 +109,14 @@ async function getAllUsers() {
 
 async function emailInUseCheck(emailInput) {
   try {
-    const { rows } = await pool.query(
-      `
-      SELECT email
-      FROM users;
-      `
-    );
+    const query = {
+      text: `
+        SELECT email
+        FROM users;
+      `,
+    };
+
+    const { rows } = await client.query(query);
 
     let inUse = false;
     rows.forEach(row => {
