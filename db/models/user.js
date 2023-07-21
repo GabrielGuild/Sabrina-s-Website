@@ -31,6 +31,7 @@ async function getUser({ username, password }) {
     const user = await getUserByUsername(username);
     if (user) {
       const hashedPassword = user.password;
+      console.log(`Comparing password: ${password} with hashedPassword: ${hashedPassword}`);
       const isValid = await bcrypt.compare(password, hashedPassword);
       if (isValid) {
         delete user.password;
@@ -45,6 +46,7 @@ async function getUser({ username, password }) {
     throw error;
   }
 }
+
 
 async function getUserById(userId) {
   try {
